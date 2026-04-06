@@ -24,8 +24,6 @@ class ItemType extends Model
         'code',
         'name',
         'description',
-
-        
     ];
 
     /**
