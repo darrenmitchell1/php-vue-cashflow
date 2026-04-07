@@ -19,8 +19,8 @@ class ItemTransactionResource extends JsonResource
 
         return [
             'id' => $this->uuid,
-            'item' => $this->whenLoaded('item', fn () => $this->itemType->toResource()),
-            'transaction_date' => $this->transaction_date->format('Y-m-d'),
+            'item' => $this->whenLoaded('item', fn () => $this->itemType->toResource(), null),
+            'transaction_date' => $this->transaction_date,
             'amount' => $this->amount
         ];
     }

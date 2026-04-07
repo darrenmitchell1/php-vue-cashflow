@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use Illuminate\Support\Str;
+
 enum Frequency: string
 {
     case SINGLE = 'single';

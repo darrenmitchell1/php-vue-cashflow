@@ -19,13 +19,17 @@ class ItemResource extends JsonResource
 
         return [
             'id' => $this->uuid,
-            'item_type' => $this->whenLoaded('item_type', fn () => $this->itemType->toResource()),
-            'flow' => $this->flow->value,
-            'flow_label' => $this->flow->label(),
-            'frequency' => $this->frequency->value,
-            'frequency_label' => $this->frequency->label(),
-            'start_date' => $this->start_date->format('Y-m-d'),
-            'end_date' => $this->end_date->format('Y-m-d'),
+            'item_type' => $this->whenLoaded('item_type', fn () => $this->itemType->toResource(), null),
+            'flow' => [
+                            'id' => $this->flow->value,
+                            'label' => $this->flow->label()
+                        ],
+            'frequency' => [
+                            'id' => $this->frequency->value,
+                            'label' => $this->frequency->label()
+                        ],
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
             'description' => $this->description,
             'company_name' => $this->company_name,
             'amount' => $this->amount,
