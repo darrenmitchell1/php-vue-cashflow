@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\CarbonImmutable;
 use App\Models\ItemType;
 use App\Models\Item;
 use App\Models\ItemTransaction;
@@ -12,4 +13,10 @@ test('Can Create Item Transaction', function () {
             ->create();
 
     expect($itemTransaction)->toBeInstanceOf(ItemTransaction::class);
+
+    // Casts
+    expect($itemTransaction->transaction_date)->toBeInstanceOf(CarbonImmutable::class);
+
+    // Relationships
+    expect($itemTransaction->item)->toBeInstanceOf(Item::class);
 });
