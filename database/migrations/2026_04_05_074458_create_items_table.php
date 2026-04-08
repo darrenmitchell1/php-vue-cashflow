@@ -19,8 +19,8 @@ return new class extends Migration
             $table->enum('frequency', ['single', 'daily', 'weekly', 'monthly']);
             $table->timestamp('start_date');
             $table->timestamp('end_date');
-            $table->text('description');
-            $table->mediumText('company_name');
+            $table->mediumText('description');
+            $table->tinyText('company_name');
             $table->float('amount', 2);
             $table->tinyText('reference')->nullable();
             $table->timestamps();

@@ -16,9 +16,9 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->enum('category', ['investing', 'financing', 'operating']);
             $table->tinyText('code')->unique();
-            $table->mediumText('name')->unique();
-            $table->text('description');
-            $table->softDeletes('deleted_at', precision: 0);
+            $table->tinyText('name')->unique();
+            $table->mediumText('description');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

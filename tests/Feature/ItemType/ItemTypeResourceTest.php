@@ -8,12 +8,13 @@ test('Item Type transformed to Resource', function () {
 
     expect($itemTypeResource)
         ->toBeArray()
-        ->toHaveCount(5)
+        ->toHaveCount(6)
         ->toHaveKey('id')
         ->toHaveKey('category')
         ->toHaveKey('code')
         ->toHaveKey('name')
-        ->toHaveKey('description');
+        ->toHaveKey('description')
+        ->toHaveKey('deleted_at');
 
     expect($itemTypeResource['category'])
         ->toBeArray()

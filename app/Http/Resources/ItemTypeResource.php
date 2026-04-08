@@ -26,6 +26,7 @@ class ItemTypeResource extends JsonResource
             'code' => $this->code,
             'name' => $this->name,
             'description' => $this->description,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 }

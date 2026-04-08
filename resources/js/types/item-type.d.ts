@@ -6,4 +6,5 @@ export interface ItemType {
   code: string;
   name: string;
   description: string;
+  deleted_at: string | null;
 }
