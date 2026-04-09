@@ -27,7 +27,7 @@ class ItemFactory extends Factory
             'flow' => Flow::IN,
             'frequency' => Frequency::SINGLE,
             'start_date' => Carbon::today(),
-            'end_date' => Carbon::today(),
+            'number_of_transactions' => 1,
             'description' => $this->faker->words(5, true),
             'company_name' => $this->faker->words(2, true),
             'amount' => 123.45,

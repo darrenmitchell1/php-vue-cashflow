@@ -11,7 +11,7 @@ test('create item success', function () {
         'flow' => Flow::IN->value,
         'frequency' => Frequency::SINGLE->value,
         'start_date' => Carbon::today()->format('Y-m-d'),
-        'end_date' => Carbon::today()->format('Y-m-d'),
+        'number_of_transactions' => 1,
         'description' => 'Purchase of Stock',
         'company_name' => 'Bunnings',
         'amount' => '1234.56',

@@ -29,7 +29,7 @@ class ItemResource extends JsonResource
                             'label' => $this->frequency->label()
                         ],
             'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
+            'number_of_transactions' => $this->number_of_transactions,
             'description' => $this->description,
             'company_name' => $this->company_name,
             'amount' => $this->amount,

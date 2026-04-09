@@ -2,6 +2,7 @@
 
 namespace App\Enums;
 
+use Carbon\CarbonInterval;
 use Illuminate\Support\Str;
 
 enum Frequency: string
@@ -18,5 +19,15 @@ enum Frequency: string
     {
         return Str::headline($this->value);
         
+    }
+
+    public function interval(): CarbonInterval
+    {
+        return match($this) {
+            self::SINGLE => CarbonInterval::days(1),
+            self::DAILY => CarbonInterval::days(1),
+            self::WEEKLY => CarbonInterval::weeks(1),
+            self::MONTHLY => CarbonInterval::months(1),
+        };
     }
 }

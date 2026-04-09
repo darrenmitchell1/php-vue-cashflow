@@ -21,7 +21,6 @@ test('Can Create Item', function () {
     expect($item->flow)->toBeInstanceOf(Flow::class);
     expect($item->frequency)->toBeInstanceOf(Frequency::class);
     expect($item->start_date)->toBeInstanceOf(CarbonImmutable::class);
-    expect($item->end_date)->toBeInstanceOf(CarbonImmutable::class);
 
     // Relationships
     expect($item->itemType)->toBeInstanceOf(ItemType::class);

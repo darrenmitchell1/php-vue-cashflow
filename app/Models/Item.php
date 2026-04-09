@@ -27,7 +27,7 @@ class Item extends Model
         'flow',
         'frequency',
         'start_date',
-        'end_date',
+        'number_of_transactions',
         'description',
         'company_name',
         'amount',
@@ -55,7 +55,6 @@ class Item extends Model
             'flow' => Flow::class,
             'frequency' => Frequency::class,
             'start_date' => 'datetime',
-            'end_date' => 'datetime'
         ];
     }
 

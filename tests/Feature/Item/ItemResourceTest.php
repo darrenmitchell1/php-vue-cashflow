@@ -19,7 +19,7 @@ test('Item Type transformed to Resource', function () {
         ->toHaveKey('flow')
         ->toHaveKey('frequency')
         ->toHaveKey('start_date')
-        ->toHaveKey('end_date')
+        ->toHaveKey('number_of_transactions')
         ->toHaveKey('description')
         ->toHaveKey('company_name')
         ->toHaveKey('amount')

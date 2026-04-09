@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enums\Flow;
 use App\Enums\Frequency;
+use App\Rules\Day28;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -29,11 +30,11 @@ class ItemUpdateRequest extends FormRequest
             'item_type_id' => 'required|string|exists:App\Models\ItemType,uuid',
             'flow' => ['required', 'string', Rule::enum(Flow::class)],
             'frequency' => ['required', 'string', Rule::enum(Frequency::class)],
-            'start_date' => 'required|date:Y-m-d',
-            'end_date' => 'required|date:Y-m-d',
+            'start_date' => ['required', 'date:Y-m-d', new Day28],
+            'number_of_transactions' => 'required|integer|min:1',
             'description' => 'required|string|max:2000',
             'company_name' => 'required|string|max:255',
-            'amount' => 'required|decimal:2',
+            'amount' => 'required|decimal:2|not_in:0',
             'reference' => 'nullable|string|max:255',
         ];
     }

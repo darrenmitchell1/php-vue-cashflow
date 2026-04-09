@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('flow', ['in', 'out']);
             $table->enum('frequency', ['single', 'daily', 'weekly', 'monthly']);
             $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->unsignedSmallInteger('number_of_transactions');
             $table->mediumText('description');
             $table->tinyText('company_name');
             $table->float('amount', 2);

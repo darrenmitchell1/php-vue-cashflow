@@ -8,7 +8,7 @@ export interface Item {
   flow: Flow;
   frequency: Frequency;
   start_date: string;
-  end_date: string;
+  number_of_transactions: string;
   description: string;
   company_name: string;
   amount: float;
