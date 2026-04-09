@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreItemTypeRequest;
-use App\Http\Requests\UpdateItemTypeRequest;
+use App\Http\Requests\ItemTypeStoreRequest;
+use App\Http\Requests\ItemTypeUpdateRequest;
 use App\Models\ItemType;
 use Illuminate\Support\Str;
 
@@ -28,7 +28,7 @@ class ItemTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreItemTypeRequest $request)
+    public function store(ItemTypeStoreRequest $request)
     {
         ItemType::create(array_merge($request->validated(), ['uuid' => Str::orderedUuid()]));
     }
@@ -52,7 +52,7 @@ class ItemTypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateItemTypeRequest $request, ItemType $itemType)
+    public function update(ItemTypeUpdateRequest $request, ItemType $itemType)
     {
         $itemType->update($request->validated());
     }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Category;
 use App\Rules\ItemTypeNameUnique;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateItemTypeRequest extends FormRequest
+class ItemTypeStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +26,9 @@ class UpdateItemTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', new ItemTypeNameUnique($this->route('itemType'))],
+            'category' => ['required', 'string', Rule::enum(Category::class)],
+            'code' => 'required|string|max:255|alpha_dash|lowercase|unique:App\Models\ItemType,code',
+            'name' => ['required', 'string', 'max:255', new ItemTypeNameUnique],
             'description' => 'required|string|max:2000',
         ];
     }

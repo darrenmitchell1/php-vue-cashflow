@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,7 +14,7 @@ use App\Enums\Frequency;
 class Item extends Model
 {
     /** @use HasFactory<\Database\Factories\ItemFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -69,8 +70,8 @@ class Item extends Model
     /**
      * Get the Item Transactions for the Item
      */
-    public function items(): HasMany
+    public function itemTransactions(): HasMany
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(ItemTransaction::class);
     }
 }

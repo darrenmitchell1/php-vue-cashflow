@@ -2,13 +2,13 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Category;
-use App\Rules\ItemTypeNameUnique;
+use App\Enums\Flow;
+use App\Enums\Frequency;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreItemTypeRequest extends FormRequest
+class ItemStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,15 @@ class StoreItemTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category' => ['required', 'string', Rule::enum(Category::class)],
-            'code' => 'required|string|max:255|alpha_dash|lowercase|unique:App\Models\ItemType,code',
-            'name' => ['required', 'string', 'max:255', new ItemTypeNameUnique],
+            'item_type_id' => 'required|uuid|exists:App\Models\ItemType,uuid',
+            'flow' => ['required', 'string', Rule::enum(Flow::class)],
+            'frequency' => ['required', 'string', Rule::enum(Frequency::class)],
+            'start_date' => 'required|date:Y-m-d',
+            'end_date' => 'required|date:Y-m-d',
             'description' => 'required|string|max:2000',
+            'company_name' => 'required|string|max:255',
+            'amount' => 'required|decimal:2',
+            'reference' => 'nullable|string|max:255',
         ];
     }
 }

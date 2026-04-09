@@ -23,6 +23,7 @@ return new class extends Migration
             $table->tinyText('company_name');
             $table->float('amount', 2);
             $table->tinyText('reference')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('item_type_id')->references('id')->on('item_types');
