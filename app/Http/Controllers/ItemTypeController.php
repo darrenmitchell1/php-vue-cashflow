@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Category;
 use App\Http\Requests\ItemTypeStoreRequest;
 use App\Http\Requests\ItemTypeUpdateRequest;
+use App\Http\Resources\ItemTypeCollection;
 use App\Models\ItemType;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class ItemTypeController extends Controller
 {
@@ -14,7 +17,7 @@ class ItemTypeController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('ItemType/Index', ['itemTypes' => (new ItemTypeCollection(ItemType::withTrashed()->get()))->collection]);
     }
 
     /**
@@ -22,7 +25,7 @@ class ItemTypeController extends Controller
      */
     public function create()
     {
-        //        
+        return Inertia::render('ItemType/Create', ['categories' => Category::toCollectionResource()]);
     }
 
     /**

@@ -20,14 +20,8 @@ class ItemResource extends JsonResource
         return [
             'id' => $this->uuid,
             'item_type' => $this->whenLoaded('item_type', fn () => $this->itemType->toResource(), null),
-            'flow' => [
-                            'id' => $this->flow->value,
-                            'label' => $this->flow->label()
-                        ],
-            'frequency' => [
-                            'id' => $this->frequency->value,
-                            'label' => $this->frequency->label()
-                        ],
+            'flow' => $this->flow->toResource(),
+            'frequency' => $this->frequency->toResource(),
             'start_date' => $this->start_date,
             'number_of_transactions' => $this->number_of_transactions,
             'description' => $this->description,

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {Head, Link} from '@inertiajs/vue3';
-import { index as itemTypeIndex  } from "@/routes/item_types/index";
-import { index as itemIndex  } from "@/routes/items/index";
-import { index as statementIndex  } from "@/routes/statement/index";
+import { Head, Link } from '@inertiajs/vue3';
+import ItemTypeController from '@/actions/App/Http/Controllers/ItemTypeController';
+import items from "@/routes/items";
+import statement from "@/routes/statement";
 </script>
 
 <template>
@@ -30,7 +30,7 @@ import { index as statementIndex  } from "@/routes/statement/index";
                     <ul class="flex gap-3 text-sm leading-normal">
                         <li>
                             <Link
-                                :href="itemTypeIndex()"
+                                :href="ItemTypeController.index()"
                                 class="inline-block px-5 py-1.5"
                             >
                                 Types
@@ -38,15 +38,15 @@ import { index as statementIndex  } from "@/routes/statement/index";
                         </li>
                         <li>
                             <Link
-                                :href="itemIndex()"
+                                :href="items.index()"
                                 class="inline-block px-5 py-1.5"
                             >
-                                Item Transactions
+                                Items
                             </Link>
                         </li>
                         <li>
                             <Link
-                                :href="statementIndex()"
+                                :href="statement.index()"
                                 class="inline-block px-5 py-1.5"
                             >
                                 Statement

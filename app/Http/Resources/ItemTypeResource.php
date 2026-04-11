@@ -19,10 +19,7 @@ class ItemTypeResource extends JsonResource
 
         return [
             'id' => $this->uuid,
-            'category' => [
-                            'id' => $this->category->value,
-                            'label' => $this->category->label()
-                        ],
+            'category' => $this->category->toResource(),
             'code' => $this->code,
             'name' => $this->name,
             'description' => $this->description,

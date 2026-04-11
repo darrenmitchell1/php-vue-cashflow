@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use Carbon\CarbonInterval;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 enum Frequency: string
@@ -18,7 +19,6 @@ enum Frequency: string
     public function label(): string
     {
         return Str::headline($this->value);
-        
     }
 
     public function interval(): CarbonInterval
@@ -29,5 +29,37 @@ enum Frequency: string
             self::WEEKLY => CarbonInterval::weeks(1),
             self::MONTHLY => CarbonInterval::months(1),
         };
+    }
+
+    public function toResource(): array
+    {
+        return [
+                'id' => $this->value,
+                'label' => $this->label()
+            ];
+    }
+
+    public static function toCollectionResource(): Collection
+    {
+        return collect(
+            [
+                [
+                    'id' => self::SINGLE->value,
+                    'label' => self::SINGLE->label()
+                ],
+                [
+                    'id' => self::DAILY->value,
+                    'label' => self::DAILY->label()
+                ],
+                [
+                    'id' => self::WEEKLY->value,
+                    'label' => self::WEEKLY->label()
+                ],
+                [
+                    'id' => self::MONTHLY->value,
+                    'label' => self::MONTHLY->label()
+                ]
+            ]
+        );
     }
 }
