@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Flow;
+use App\Enums\Frequency;
 use App\Events\ItemCreated;
 use App\Events\ItemDeleted;
 use App\Http\Requests\ItemStoreRequest;
 use App\Http\Requests\ItemUpdateRequest;
+use App\Http\Resources\ItemCollection;
+use App\Http\Resources\ItemTypeCollection;
 use App\Models\Item;
 use App\Models\ItemType;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class ItemController extends Controller
 {
@@ -17,7 +23,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Item/Index', ['items' => (new ItemCollection(Item::with(['itemType'])->get()))->collection]);
     }
 
     /**
@@ -25,7 +31,11 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Item/Create', [
+            'flows' => fn () => Flow::toCollectionResource(),
+            'frequencies' => fn () => Frequency::toCollectionResource(),
+            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::get()))->collection
+        ]);
     }
 
     /**
@@ -51,6 +61,8 @@ class ItemController extends Controller
         ]));
 
         ItemCreated::dispatch($item);
+
+        return Redirect::route('items.index', ['items' => (new ItemCollection(Item::get()))->collection]);
     }
 
     /**

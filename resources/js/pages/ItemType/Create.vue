@@ -2,16 +2,11 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { index, store } from '@/routes/item_types';
 import { Category } from '@/types/category';
-import InputError from '@/Components/InputError.vue';
+import { ItemTypeError } from '@/types/item-type';
 
 interface Props {
-    categories: Category[],
-    errors: {
-        category?: string,
-        code?: string,
-        name?: string,
-        description?: string
-    },
+  categories: Category[],
+  errors: ItemTypeError,
 }
 
 const props = defineProps<Props>();
@@ -39,13 +34,14 @@ const form = useForm({
   <div class="py-12">
     <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8 bg-white p-4 shadow-sm sm:rounded-lg sm:p-8 w-1/3">
       <form @submit.prevent="form.submit(store().method, store().url, {preserveState: true, except: ['categories']})">
+        
         <label for="category" class="mt-10 block text-sm font-medium text-gray-700">Category</label>
         <select v-model="form.category" required class="w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">
             <option v-for="category in props.categories" :id="category.id" :value="category.id" class="break-words whitespace-normal">
                 {{ category.label }}
             </option>
         </select>
-        <InputError v-if="props.errors.category" class="mt-2" :message="props.errors.category" />
+        <p class="input-error mt-2" v-if="props.errors.category">{{ props.errors.category }}</p>
 
         <label for="code" class="mt-10 block text-sm font-medium text-gray-700">Code</label>
         <input
@@ -58,7 +54,7 @@ const form = useForm({
             autofocus
             autocomplete="code"
         />
-        <InputError v-if="props.errors.code" class="mt-2" :message="props.errors.code" />
+        <p class="input-error mt-2" v-if="props.errors.code">{{ props.errors.code }}</p>
 
         <label for="name" class="mt-10 block text-sm font-medium text-gray-700">Name</label>
         <input
@@ -71,7 +67,7 @@ const form = useForm({
             autofocus
             autocomplete="name"
         />
-        <InputError v-if="props.errors.name" class="mt-2" :message="props.errors.name" />
+        <p class="input-error mt-2" v-if="props.errors.name">{{ props.errors.name }}</p>
 
         <label for="description" class="mt-10 block text-sm font-medium text-gray-700">Description</label>
         <textarea
@@ -83,11 +79,12 @@ const form = useForm({
             required
             autocomplete="description"
         />
-        <InputError v-if="props.errors.description" class="mt-2" :message="props.errors.description" />
+        <p class="input-error mt-2" v-if="props.errors.description">{{ props.errors.description }}</p>
 
         <div class="mt-4 flex items-center justify-end">
             <button type="submit">Create</button>
         </div>
+        
       </form>
     </div>
   </div>

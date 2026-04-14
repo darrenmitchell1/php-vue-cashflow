@@ -9,3 +9,7 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 }
+
+@theme {
+    --input-error: text-sm text-red-600
+}

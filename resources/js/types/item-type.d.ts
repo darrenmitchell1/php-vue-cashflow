@@ -8,3 +8,10 @@ export interface ItemType {
   description: string;
   deleted_at: string | null;
 }
+
+export interface ItemTypeError {
+  category?: string;
+  code?: string;
+  name?: string;
+  description?: string;
+}

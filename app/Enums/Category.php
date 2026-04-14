@@ -30,18 +30,9 @@ enum Category: string
     {
         return collect(
             [
-                [
-                    'id' => self::INVESTING->value,
-                    'label' => self::INVESTING->label()
-                ],
-                [
-                    'id' => self::FINANCING->value,
-                    'label' => self::FINANCING->label()
-                ],
-                [
-                    'id' => self::OPERATING->value,
-                    'label' => self::OPERATING->label()
-                ]
+                self::INVESTING->toResource(),
+                self::FINANCING->toResource(),
+                self::OPERATING->toResource(),
             ]
         );
     }

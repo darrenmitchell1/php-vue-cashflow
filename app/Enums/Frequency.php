@@ -43,22 +43,10 @@ enum Frequency: string
     {
         return collect(
             [
-                [
-                    'id' => self::SINGLE->value,
-                    'label' => self::SINGLE->label()
-                ],
-                [
-                    'id' => self::DAILY->value,
-                    'label' => self::DAILY->label()
-                ],
-                [
-                    'id' => self::WEEKLY->value,
-                    'label' => self::WEEKLY->label()
-                ],
-                [
-                    'id' => self::MONTHLY->value,
-                    'label' => self::MONTHLY->label()
-                ]
+                self::SINGLE->toResource(),
+                self::DAILY->toResource(),
+                self::WEEKLY->toResource(),
+                self::MONTHLY->toResource(),
             ]
         );
     }

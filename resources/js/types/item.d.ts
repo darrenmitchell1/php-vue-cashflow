@@ -14,3 +14,15 @@ export interface Item {
   amount: float;
   reference: string | null;
 }
+
+export interface ItemError {
+  item_type_id?: string;
+  flow?: string;
+  frequency?: string;
+  start_date?: string;
+  number_of_transactions?: string;
+  description?: string;
+  company_name?: string;
+  amount?: string;
+  reference?: string;
+}

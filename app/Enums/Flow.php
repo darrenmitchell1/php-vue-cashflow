@@ -28,14 +28,8 @@ enum Flow: string
     {
         return collect(
             [
-                [
-                    'id' => self::IN->value,
-                    'label' => self::IN->label()
-                ],
-                [
-                    'id' => self::OUT->value,
-                    'label' => self::OUT->label()
-                ],
+                self::IN->toResource(),
+                self::OUT->toResource(),
             ]
         );
     }

@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { home } from "@/routes/index";
 import { create } from '@/routes/item_types';
+import { ItemType } from '@/types/item-type';
 
-const props = defineProps({
-    itemTypes: {
-        type: JSON,
-        required: true,
-    },
-});
+interface Props {
+    itemTypes: ItemType[],
+}
+
+const props = defineProps<Props>();
 </script>
 
 <template>
@@ -39,7 +39,7 @@ const props = defineProps({
       </tr>
     </thead>
     <tbody>
-      <tr v-for="itemType in itemTypes" :key="itemType.id" style="text-align: center; padding: 24px;">
+      <tr v-for="itemType in props.itemTypes" :key="itemType.id" style="text-align: center; padding: 24px;">
         <td>{{ itemType.code }}</td>
         <td>{{ itemType.name }}</td>
         <td>{{ itemType.description }}</td>
