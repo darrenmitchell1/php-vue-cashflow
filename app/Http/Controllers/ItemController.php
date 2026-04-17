@@ -12,7 +12,6 @@ use App\Http\Resources\ItemCollection;
 use App\Http\Resources\ItemTypeCollection;
 use App\Models\Item;
 use App\Models\ItemType;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -62,7 +61,7 @@ class ItemController extends Controller
 
         ItemCreated::dispatch($item);
 
-        return Redirect::route('items.index', ['items' => (new ItemCollection(Item::get()))->collection]);
+        return Inertia::render('Item/Index', ['items' => (new ItemCollection(Item::get()))->collection]);
     }
 
     /**

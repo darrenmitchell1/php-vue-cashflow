@@ -48,7 +48,7 @@ function toDecimal(itemForm: any) {
 
   <div class="py-12">
     <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8 bg-white p-4 shadow-sm sm:rounded-lg sm:p-8 w-1/3">
-      <form @submit.prevent="form.submit(store().method, store().url, {preserveState: true, except: ['categories']})">
+      <form @submit.prevent="form.submit(store().method, store().url, {preserveState: true, except: ['itemTypes', 'flows', 'frequencies']})">
 
         <label for="item_type_id" class="mt-10 block text-sm font-medium text-gray-700">Item Type</label>
         <select v-model="form.item_type_id" required class="w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">

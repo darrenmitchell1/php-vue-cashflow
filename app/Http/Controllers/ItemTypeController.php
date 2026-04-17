@@ -7,7 +7,6 @@ use App\Http\Requests\ItemTypeStoreRequest;
 use App\Http\Requests\ItemTypeUpdateRequest;
 use App\Http\Resources\ItemTypeCollection;
 use App\Models\ItemType;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -36,7 +35,7 @@ class ItemTypeController extends Controller
     {
         ItemType::create(array_merge($request->validated(), ['uuid' => Str::orderedUuid()]));
 
-        return Redirect::route('item_types.index', ['itemTypes' => (new ItemTypeCollection(ItemType::withTrashed()->get()))->collection]);
+        return Inertia::render('ItemType/Index', ['itemTypes' => (new ItemTypeCollection(ItemType::withTrashed()->get()))->collection]);
     }
 
     /**

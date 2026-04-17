@@ -28,4 +28,4 @@ Route::delete('/items/{item:uuid}', [ItemController::class, 'destroy'])->name('i
 
 
 Route::get('/statement', [StatementController::class, 'index'])->name('statement.index');
-Route::get('/statement/{period_from}/{period_from}', [StatementController::class, 'show'])->name('statement.show');
+Route::get('/statement/show', [StatementController::class, 'show'])->name('statement.show');

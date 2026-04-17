@@ -1,4 +1,4 @@
-## Base Application for Laravel and Vue.
+## Cashflow Application for Laravel and Vue.
 
 ## Environment
 
