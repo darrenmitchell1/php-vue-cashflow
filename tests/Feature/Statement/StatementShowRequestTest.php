@@ -6,6 +6,7 @@ use App\Models\ItemType;
 use Carbon\Carbon;
 use Illuminate\Testing\Fluent\AssertableJson;
 
+// @TODO not complete
 test('show statement success', function () {
     // Opening IN
     ItemTransaction::factory(4)
@@ -58,7 +59,7 @@ test('show statement success', function () {
 
     $response
         ->assertStatus(200)
-        ->assertJsonCount(6, 'statement')
+        ->assertJsonCount(7, 'statement')
         ->assertJsonStructure([
             'statement' => [
                 'period_from',
@@ -67,6 +68,7 @@ test('show statement success', function () {
                 'opening_out_balance_amount',
                 'closing_in_balance_amount',
                 'closing_out_balance_amount',
+                'item_categories'
             ]
         ])
         ->assertJson(fn (AssertableJson $json) =>
@@ -77,6 +79,7 @@ test('show statement success', function () {
                     ->where('opening_out_balance_amount', 24)
                     ->where('closing_in_balance_amount', 15)
                     ->where('closing_out_balance_amount', 35)
+                    ->has('item_categories')
             )
         );
 });

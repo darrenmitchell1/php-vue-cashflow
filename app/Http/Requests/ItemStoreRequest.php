@@ -30,7 +30,7 @@ class ItemStoreRequest extends FormRequest
             'item_type_id' => 'required|uuid|exists:App\Models\ItemType,uuid',
             'flow' => ['required', 'string', Rule::enum(Flow::class)],
             'frequency' => ['required', 'string', Rule::enum(Frequency::class)],
-            'start_date' => ['required', 'date:Y-m-d', new Day28],
+            'start_date' => ['required', 'date:Y-m-d', Rule::when($this->frequency === 'monthly', new Day28)],
             'number_of_transactions' => 'required|integer|min:1',
             'description' => 'required|string|max:2000',
             'company_name' => 'required|string|max:255',

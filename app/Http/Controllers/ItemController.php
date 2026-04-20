@@ -42,6 +42,8 @@ class ItemController extends Controller
      */
     public function store(ItemStoreRequest $request)
     {
+        $request->validated();
+
         $itemType = ItemType::firstWhere('uuid', $request->item_type_id);
 
         $amount = $request->amount;

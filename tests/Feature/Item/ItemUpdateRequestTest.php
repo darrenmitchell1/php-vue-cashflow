@@ -19,7 +19,7 @@ test('update item success', function () {
         'start_date' => Carbon::today()->format('Y-m-d'),
         'number_of_transactions' => 1,
         'description' => 'Purchase of Stock',
-        'company_name' => 'Bunnings',
+        'company_name' => 'A Supplier',
         'amount' => '1234.56',
         //'reference' => 'a1',
     ];
