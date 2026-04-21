@@ -83,9 +83,6 @@ test('Create Transactions for Weekly', function () {
 
     foreach ($transactions as $key => $transaction) {
         expect($transaction)->toBeInstanceOf(ItemTransaction::class);
-
-        print_r($transaction->transaction_date->format('Y-m-d'));
-
         expect($transaction->transaction_date)->toEqual(Carbon::today()->addDay()->addWeeks($key)->toImmutable());
         expect($transaction->amount)->toEqual(3.45);
     }

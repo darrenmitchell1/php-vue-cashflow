@@ -15,7 +15,7 @@ const form = useForm({
 });
 </script>
 <template>
-  <Head title="Statement" />
+  <Head title="Cashflow Statement" />
   
   <div style="margin-top: 50px; margin-left: 50px;">
     <Link
