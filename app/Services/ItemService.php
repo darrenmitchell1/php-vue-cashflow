@@ -17,7 +17,7 @@ class ItemService
     }
 
     /**
-     * Handle the Actions for a Created Item
+     * Create Transactions for the Item
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class ItemService
     }
 
     /**
-     * Handle the Actions for a Created Item
+     * Delete Transactions for the Item
      *
      * @return void
      */

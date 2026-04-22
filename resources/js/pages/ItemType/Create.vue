@@ -36,7 +36,7 @@ const form = useForm({
       <form @submit.prevent="form.submit(store().method, store().url, {preserveState: true, except: ['categories']})">
         
         <label for="category" class="mt-10 block text-sm font-medium text-gray-700">Category</label>
-        <select v-model="form.category" required class="w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">
+        <select v-model="form.category" required class="mt-1 w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">
             <option v-for="category in props.categories" :id="category.id" :value="category.id" class="break-words whitespace-normal">
                 {{ category.label }}
             </option>

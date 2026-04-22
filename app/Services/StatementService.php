@@ -6,7 +6,7 @@ use App\Enums\Category;
 use App\Enums\Flow;
 use App\Models\ItemTransaction;
 use App\Models\ItemType;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 
 class StatementService
 {
@@ -19,11 +19,13 @@ class StatementService
     }
 
     /**
-     * Handle the Actions for a Created Item
+     * Build the Data for the Statement
      *
-     * @return void
+     * @param CarbonImmutable $periodFrom
+     * @param CarbonImmutable $periodTo
+     * @return array
      */
-    public static function buildStatementData(Carbon $periodFrom, Carbon $periodTo): array
+    public static function buildStatementData(CarbonImmutable $periodFrom, CarbonImmutable $periodTo): array
     {
         $itemTypes = ItemType::withTrashed()
             ->with([
@@ -66,7 +68,7 @@ class StatementService
                 $itemCategoryies[$itemType->category->value][$itemType->code]['items'][] = [
                     'item' => $item->toResource(),
                     'item_period_amount' => $item->item_transactions_sum_amount,
-                ] ;
+                ];
             }
         }
  

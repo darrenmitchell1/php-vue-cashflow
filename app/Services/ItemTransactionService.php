@@ -16,6 +16,14 @@ class ItemTransactionService
         //
     }
 
+    /**
+     * Create a Transaction for an Item
+     *
+     * @param integer $itemId
+     * @param Carbon $transactionDate
+     * @param float $amount
+     * @return ItemTransaction
+     */
     public static function create(int $itemId, Carbon $transactionDate, float $amount): ItemTransaction
     {
         return ItemTransaction::create([
