@@ -53,19 +53,19 @@ class StatementService
             if ($itemType->items->isEmpty()) {
                 continue;
             }
-            $itemCategoryies[$itemType->category->value][$itemType->code]['itemType'] = $itemType->toResource();
-            $itemCategoryies[$itemType->category->value][$itemType->code]['item_type_in_period_amount'] = 0;
-            $itemCategoryies[$itemType->category->value][$itemType->code]['item_type_out_period_amount'] = 0;
+            $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['itemType'] = $itemType->toResource();
+            $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['item_type_in_period_amount'] = 0;
+            $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['item_type_out_period_amount'] = 0;
             foreach ($itemType->items as $item) {
                 if ($item->flow === Flow::IN) {
                     $itemCategoryies[$itemType->category->value]['category_in_period_amount'] += $item->item_transactions_sum_amount;
-                    $itemCategoryies[$itemType->category->value][$itemType->code]['item_type_in_period_amount'] += $item->item_transactions_sum_amount;
+                    $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['item_type_in_period_amount'] += $item->item_transactions_sum_amount;
                 } else {
                     $itemCategoryies[$itemType->category->value]['category_out_period_amount'] += $item->item_transactions_sum_amount;
-                    $itemCategoryies[$itemType->category->value][$itemType->code]['item_type_out_period_amount'] += $item->item_transactions_sum_amount;
+                    $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['item_type_out_period_amount'] += $item->item_transactions_sum_amount;
                 }
 
-                $itemCategoryies[$itemType->category->value][$itemType->code]['items'][] = [
+                $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['items'][] = [
                     'item' => $item->toResource(),
                     'item_period_amount' => $item->item_transactions_sum_amount,
                 ];

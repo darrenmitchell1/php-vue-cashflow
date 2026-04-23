@@ -110,14 +110,14 @@ test('Full Statement for Period', function () {
     expect(count($statementData['item_categories'][Category::INVESTING->value]))->toBe(4);
     expect($statementData['item_categories'][Category::INVESTING->value]['category_in_period_amount'])->toBe(0);
     expect($statementData['item_categories'][Category::INVESTING->value]['category_out_period_amount'])->toBe(-2.00);
-    expect($statementData['item_categories'][Category::INVESTING->value][$startPeriodItem->itemType->code]['item_type_in_period_amount'])->toBe(0);
-    expect($statementData['item_categories'][Category::INVESTING->value][$startPeriodItem->itemType->code]['item_type_out_period_amount'])->toBe(-2.00);
-    expect(count($statementData['item_categories'][Category::INVESTING->value][$startPeriodItem->itemType->code]['items']))->toBe(1);
+    expect($statementData['item_categories'][Category::INVESTING->value]['itemTypes'][$startPeriodItem->itemType->code]['item_type_in_period_amount'])->toBe(0);
+    expect($statementData['item_categories'][Category::INVESTING->value]['itemTypes'][$startPeriodItem->itemType->code]['item_type_out_period_amount'])->toBe(-2.00);
+    expect(count($statementData['item_categories'][Category::INVESTING->value]['itemTypes'][$startPeriodItem->itemType->code]['items']))->toBe(1);
 
     expect(count($statementData['item_categories'][Category::FINANCING->value]))->toBe(4);
     expect($statementData['item_categories'][Category::FINANCING->value]['category_in_period_amount'])->toBe(6.00);
     expect($statementData['item_categories'][Category::FINANCING->value]['category_out_period_amount'])->toBe(0);
-    expect($statementData['item_categories'][Category::FINANCING->value][$staggerStartPeriodItem->itemType->code]['item_type_in_period_amount'])->toBe(6.00);
-    expect($statementData['item_categories'][Category::FINANCING->value][$staggerStartPeriodItem->itemType->code]['item_type_out_period_amount'])->toBe(0);
-    expect(count($statementData['item_categories'][Category::FINANCING->value][$staggerStartPeriodItem->itemType->code]['items']))->toBe(1);
+    expect($statementData['item_categories'][Category::FINANCING->value]['itemTypes'][$staggerStartPeriodItem->itemType->code]['item_type_in_period_amount'])->toBe(6.00);
+    expect($statementData['item_categories'][Category::FINANCING->value]['itemTypes'][$staggerStartPeriodItem->itemType->code]['item_type_out_period_amount'])->toBe(0);
+    expect(count($statementData['item_categories'][Category::FINANCING->value]['itemTypes'][$staggerStartPeriodItem->itemType->code]['items']))->toBe(1);
 });

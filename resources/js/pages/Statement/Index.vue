@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { StatementError } from '@/types/statement';
 import { home } from "@/routes/index";
 import { show } from '@/routes/statement';
+import Show from './Show.vue';
 
 interface Props {
   errors: StatementError,
@@ -16,7 +17,7 @@ const form = useForm({
     period_to: null,
 });
 
-const statement = ref([]);
+const statement = ref(null);
 const errorMessage = ref(null);
 
 async function getStatement() {
@@ -88,6 +89,9 @@ async function getStatement() {
       </div>
 
     </form>
+  </div>
 
+  <div v-if="statement" class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8 bg-white p-4 shadow-sm sm:rounded-lg sm:p-8">
+      <Show :statement="statement" />
   </div>
 </template>
