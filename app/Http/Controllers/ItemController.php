@@ -6,6 +6,7 @@ use App\Enums\Flow;
 use App\Enums\Frequency;
 use App\Events\ItemCreated;
 use App\Events\ItemDeleted;
+use App\Events\ItemUpdated;
 use App\Http\Requests\ItemStoreRequest;
 use App\Http\Requests\ItemUpdateRequest;
 use App\Http\Resources\ItemCollection;
@@ -91,8 +92,12 @@ class ItemController extends Controller
 
         $item->update(array_merge($request->validated(), ['item_type_id' => $itemType->id]));
 
-        $oldValues = $item->getPrevious();
-        $newValues = $item->getChanges();
+        $changes = [
+            'old' => $item->getPrevious(),
+            'new' => $item->getChanges(),
+        ];
+
+        ItemUpdated::dispatch($item, $changes);
     }
 
     /**

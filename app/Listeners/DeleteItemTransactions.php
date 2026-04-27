@@ -6,6 +6,7 @@ use App\Events\ItemDeleted;
 use App\Services\ItemService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Throwable;
 
 class DeleteItemTransactions
 {
@@ -23,5 +24,13 @@ class DeleteItemTransactions
     public function handle(ItemDeleted $event): void
     {
         (new ItemService($event->item))->deleteTransactions();
+    }
+
+    /**
+     * Handle a job failure.
+     */
+    public function failed(ItemDeleted $event, Throwable $exception): void
+    {
+        report($exception);
     }
 }

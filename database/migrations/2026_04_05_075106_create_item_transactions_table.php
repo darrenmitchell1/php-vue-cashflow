@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('item_id');
-            $table->timestamp('transaction_date');
+            $table->timestamp('transaction_date')->index();
             $table->float('amount', 2);
             $table->timestamps();
 

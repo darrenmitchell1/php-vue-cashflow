@@ -42,6 +42,9 @@ class StatementService
             ->get();
 
         // build the statement item structure
+        $closingInBalanceAmount = 0;
+        $closingOutBalanceAmount = 0;
+
         // set the order of the categories
         $itemCategoryies = [
             Category::OPERATING->value => ['category' => Category::OPERATING->toResource(), 'category_in_period_amount' => 0, 'category_out_period_amount' => 0],
@@ -58,9 +61,11 @@ class StatementService
             $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['item_type_out_period_amount'] = 0;
             foreach ($itemType->items as $item) {
                 if ($item->flow === Flow::IN) {
+                    $closingInBalanceAmount += $item->item_transactions_sum_amount;
                     $itemCategoryies[$itemType->category->value]['category_in_period_amount'] += $item->item_transactions_sum_amount;
                     $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['item_type_in_period_amount'] += $item->item_transactions_sum_amount;
                 } else {
+                    $closingOutBalanceAmount += $item->item_transactions_sum_amount;
                     $itemCategoryies[$itemType->category->value]['category_out_period_amount'] += $item->item_transactions_sum_amount;
                     $itemCategoryies[$itemType->category->value]['itemTypes'][$itemType->code]['item_type_out_period_amount'] += $item->item_transactions_sum_amount;
                 }
@@ -82,12 +87,8 @@ class StatementService
             'opening_out_balance_amount' => ItemTransaction::whereRelation ('item', 'flow', 'out')
                 ->whereDate('transaction_date', '<', $periodFrom)
                 ->sum('amount'),
-            'closing_in_balance_amount' => ItemTransaction::whereRelation ('item', 'flow', 'in')
-                ->whereBetween('transaction_date', [$periodFrom, $periodTo])
-                ->sum('amount'),
-            'closing_out_balance_amount' => ItemTransaction::whereRelation ('item', 'flow', 'out')
-                ->whereBetween('transaction_date', [$periodFrom, $periodTo])
-                ->sum('amount'),
+            'closing_in_balance_amount' => $closingInBalanceAmount,
+            'closing_out_balance_amount' => $closingOutBalanceAmount,
             'item_categories' => $itemCategoryies,
         ];
     }

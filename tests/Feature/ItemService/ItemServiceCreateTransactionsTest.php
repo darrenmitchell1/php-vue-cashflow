@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 test('Create Transactions for Single', function () {
-    $itemSingle = Item::factory()
+    $item = Item::factory()
             ->for(ItemType::factory()->create())
             ->create([
                 'flow' => Flow::IN,
@@ -20,9 +20,9 @@ test('Create Transactions for Single', function () {
                 'amount' => 1.23
                 ]);
 
-    (new ItemService($itemSingle))->createTransactions();
+    (new ItemService($item))->createTransactions();
 
-    $transactions = $itemSingle->itemTransactions;
+    $transactions = $item->itemTransactions;
 
     expect($transactions)
         ->toBeInstanceOf(Collection::class)
@@ -36,7 +36,7 @@ test('Create Transactions for Single', function () {
 });
 
 test('Create Transactions for Daily', function () {
-    $itemSingle = Item::factory()
+    $item = Item::factory()
             ->for(ItemType::factory()->create())
             ->create([
                 'flow' => Flow::IN,
@@ -46,9 +46,9 @@ test('Create Transactions for Daily', function () {
                 'amount' => 2.34
                 ]);
 
-    (new ItemService($itemSingle))->createTransactions();
+    (new ItemService($item))->createTransactions();
 
-    $transactions = $itemSingle->itemTransactions;
+    $transactions = $item->itemTransactions;
 
     expect($transactions)
         ->toBeInstanceOf(Collection::class)
@@ -63,7 +63,7 @@ test('Create Transactions for Daily', function () {
 });
 
 test('Create Transactions for Weekly', function () {
-    $itemSingle = Item::factory()
+    $item = Item::factory()
             ->for(ItemType::factory()->create())
             ->create([
                 'flow' => Flow::IN,
@@ -73,9 +73,9 @@ test('Create Transactions for Weekly', function () {
                 'amount' => 3.45
                 ]);
 
-    (new ItemService($itemSingle))->createTransactions();
+    (new ItemService($item))->createTransactions();
 
-    $transactions = $itemSingle->itemTransactions;
+    $transactions = $item->itemTransactions;
 
     expect($transactions)
         ->toBeInstanceOf(Collection::class)
@@ -89,7 +89,7 @@ test('Create Transactions for Weekly', function () {
 });
 
 test('Create Transactions for Monthly', function () {
-    $itemSingle = Item::factory()
+    $item = Item::factory()
             ->for(ItemType::factory()->create())
             ->create([
                 'flow' => Flow::IN,
@@ -99,9 +99,9 @@ test('Create Transactions for Monthly', function () {
                 'amount' => 4.56
                 ]);
 
-    (new ItemService($itemSingle))->createTransactions();
+    (new ItemService($item))->createTransactions();
 
-    $transactions = $itemSingle->itemTransactions;
+    $transactions = $item->itemTransactions;
 
     expect($transactions)
         ->toBeInstanceOf(Collection::class)

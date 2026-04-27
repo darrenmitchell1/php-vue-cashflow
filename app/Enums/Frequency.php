@@ -21,13 +21,13 @@ enum Frequency: string
         return Str::headline($this->value);
     }
 
-    public function interval(): CarbonInterval
+    public function interval(int $numberOfUnits = 1): CarbonInterval
     {
         return match($this) {
-            self::SINGLE => CarbonInterval::days(1),
-            self::DAILY => CarbonInterval::days(1),
-            self::WEEKLY => CarbonInterval::weeks(1),
-            self::MONTHLY => CarbonInterval::months(1),
+            self::SINGLE => CarbonInterval::days($numberOfUnits),
+            self::DAILY => CarbonInterval::days($numberOfUnits),
+            self::WEEKLY => CarbonInterval::weeks($numberOfUnits),
+            self::MONTHLY => CarbonInterval::months($numberOfUnits),
         };
     }
 
