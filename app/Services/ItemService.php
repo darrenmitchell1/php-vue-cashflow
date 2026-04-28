@@ -45,21 +45,21 @@ class ItemService
     }
 
     /**
-     * Update the Amount on all item transactions
+     * Update Transaction Amounts for the Item
      *
      * @return void
      */
-    public function updateTransactionsAmount()
+    public function syncTransactionAmounts()
     {
         $this->item->itemTransactions()->update(['amount' => $this->item->amount]);
     }
 
     /**
-     * Create/Update/Delete Transactions so they are in Sync with the Item
+     * Create/Update/Delete so the number of Transactions are in Sync with the Item
      *
      * @return void
      */
-    public function adjustNumberOfTransactions()
+    public function syncNumberOfTransactions()
     {
         $interval = $this->item->frequency->interval();
         $totalInterval = $this->item->frequency->interval($this->item->number_of_transactions);
@@ -73,15 +73,10 @@ class ItemService
 
         // create/update transactions
         for ($x = 0; $x < $this->item->number_of_transactions; $x++) {
-            print_r($startDate->format('Y-m-d') . '  ');
             $itemTransaction = ItemTransaction::whereDate('transaction_date', $startDate)->first();
 
-            if ($itemTransaction instanceof ItemTransaction) {
-                ItemTransactionService::update($this->item, $itemTransaction, $startDate);
-                print_r('  U  ');
-            } else {
+            if (!($itemTransaction instanceof ItemTransaction)) {
                 ItemTransactionService::create($this->item, $startDate);
-                print_r('  I  ');
             }
 
             $startDate->add($interval);

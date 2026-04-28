@@ -29,10 +29,14 @@ class UpdateItemTransactions
             // major change so just delete and rebuild transactions
             $itemService->deleteTransactions();
             $itemService->createTransactions();
-        } elseif ($this->hasChanged($event->itemChanges, 'number_of_transactions')) {
-            $itemService->adjustNumberOfTransactions();
-        } elseif ($this->hasChanged($event->itemChanges, 'flow') || $this->hasChanged($event->itemChanges, 'amount')) {
-            $itemService->updateTransactionsAmount();
+        } else {
+            if ($this->hasChanged($event->itemChanges, 'number_of_transactions')) {
+                $itemService->syncNumberOfTransactions();
+            }
+            
+            if ($this->hasChanged($event->itemChanges, 'flow') || $this->hasChanged($event->itemChanges, 'amount')) {
+                $itemService->syncTransactionAmounts();
+            }
         }
     }
 
