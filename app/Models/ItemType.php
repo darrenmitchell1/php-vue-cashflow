@@ -49,7 +49,9 @@ class ItemType extends Model
     }
 
     /**
-     * Get the Items for the Item Type
+     * Get the Items for this Item Type
+     *
+     * @return HasMany
      */
     public function items(): HasMany
     {

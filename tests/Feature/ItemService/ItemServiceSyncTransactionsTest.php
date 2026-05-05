@@ -35,7 +35,7 @@ test('Adjust for Transaction Date Change', function () {
     $item->update([
         'flow' => Flow::OUT,
         'frequency' => Frequency::MONTHLY,
-        'start_date' => Carbon::today()->addDays(5),
+        'start_date' => Carbon::today()->day(20)->addDays(5),
         'amount' => -4.56
     ]);
 
@@ -50,7 +50,7 @@ test('Adjust for Transaction Date Change', function () {
         ->toHaveCount(3);
 
     foreach ($transactions as $key => $transaction) {
-        expect($transaction->transaction_date)->toEqual(Carbon::today()->addDays(5)->addMonths($key)->toImmutable());
+        expect($transaction->transaction_date)->toEqual(Carbon::today()->day(20)->addDays(5)->addMonths($key)->toImmutable());
         expect($transaction->amount)->toEqual(-4.56);
     }
 });

@@ -94,7 +94,7 @@ test('Create Transactions for Monthly', function () {
             ->create([
                 'flow' => Flow::IN,
                 'frequency' => Frequency::MONTHLY,
-                'start_date' => Carbon::parse('2026-01-28'),
+                'start_date' => Carbon::today()->day(28),
                 'number_of_transactions' => 3,
                 'amount' => 4.56
                 ]);
@@ -110,7 +110,7 @@ test('Create Transactions for Monthly', function () {
     foreach ($transactions as $key => $transaction) {
         expect($transaction)->toBeInstanceOf(ItemTransaction::class);
 
-        expect($transaction->transaction_date)->toEqual(Carbon::parse('2026-01-28')->addMonths($key)->toImmutable());
+        expect($transaction->transaction_date)->toEqual(Carbon::today()->day(28)->addMonths($key)->toImmutable());
         expect($transaction->amount)->toEqual(4.56);
     }
 });

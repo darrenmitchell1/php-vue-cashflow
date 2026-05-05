@@ -2,9 +2,11 @@
 
 use App\Enums\Flow;
 use App\Enums\Frequency;
+use App\Events\ItemUpdated;
 use App\Models\Item;
 use App\Models\ItemType;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
 
 test('update item success', function () {
     $item = Item::factory()
@@ -16,7 +18,7 @@ test('update item success', function () {
         'item_type_id' => $item->itemType->uuid,
         'flow' => Flow::IN->value,
         'frequency' => Frequency::SINGLE->value,
-        'start_date' => Carbon::today()->format('Y-m-d'),
+        'start_date' => Carbon::today()->day(28)->format('Y-m-d'),
         'number_of_transactions' => 1,
         'description' => 'Purchase of Stock',
         'company_name' => 'A Supplier',
@@ -24,7 +26,11 @@ test('update item success', function () {
         //'reference' => 'a1',
     ];
 
+    Event::fake();
+
     $response = $this->patchJson(route('items.update', $payload));
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
+
+    Event::assertDispatched(ItemUpdated::class);
 });

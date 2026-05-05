@@ -23,6 +23,7 @@ class ItemResource extends JsonResource
             'flow' => $this->flow->toResource(),
             'frequency' => $this->frequency->toResource(),
             'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
             'number_of_transactions' => $this->number_of_transactions,
             'description' => $this->description,
             'company_name' => $this->company_name,

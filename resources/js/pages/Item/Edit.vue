@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { index, store } from '@/routes/items';
-import { ItemError } from '@/types/item';
+import { index, update } from '@/routes/items';
+import { Item, ItemError } from '@/types/item';
 import { Flow } from '@/types/flow';
 import { Frequency } from '@/types/frequency';
 import { ItemType } from '@/types/item-type';
 
 interface Props {
+  item: Item,
   itemTypes: ItemType[],
   flows: Flow[],
   frequencies: Frequency[],
@@ -15,16 +16,18 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const updateRoute = update({item: props.item.id});
+
 const form = useForm({
-    item_type_id: null,
-    flow: null,
-    frequency: null,
-    start_date: null,
-    number_of_transactions: null,
-    description: null,
-    company_name: null,
-    amount: null,
-    reference: null,
+    item_type_id: props.item.item_type?.id,
+    flow: props.item.flow.id,
+    frequency: props.item.frequency.id,
+    start_date: new Date(props.item.start_date).toISOString().split('T')[0],
+    number_of_transactions: props.item.number_of_transactions,
+    description: props.item.description,
+    company_name: props.item.company_name,
+    amount: props.item.amount,
+    reference: props.item.reference,
 });
 </script>
 
@@ -42,7 +45,7 @@ const form = useForm({
 
   <div class="py-12">
     <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8 bg-white p-4 shadow-sm sm:rounded-lg sm:p-8 w-1/3">
-      <form @submit.prevent="form.submit(store().method, store().url, {preserveState: true, except: ['itemTypes', 'flows', 'frequencies']})">
+      <form @submit.prevent="form.submit(updateRoute.method, updateRoute.url)">
 
         <label for="item_type_id" class="mt-10 block text-sm font-medium text-gray-700">Item Type</label>
         <select v-model="form.item_type_id" required class="w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">
@@ -149,7 +152,7 @@ const form = useForm({
         <p class="input-error mt-2" v-if="props.errors.description">{{ props.errors.description }}</p>
 
         <div class="mt-4 flex items-center justify-end">
-            <button type="submit">Create</button>
+            <button type="submit">Update</button>
         </div>
 
       </form>

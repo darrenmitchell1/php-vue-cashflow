@@ -21,7 +21,7 @@ test('update item type success', function () {
 
     $response = $this->patchJson(route('item_types.update', $params));
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 });
 
 test('update item type unique name error', function () {

@@ -9,7 +9,7 @@ test('destroy item type', function () {
 
     $response = $this->deleteJson(route('item_types.destroy', ['itemType' => $itemType->uuid]));
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 
     expect($itemType->fresh()->trashed())->toBeTrue();
 });
@@ -23,7 +23,7 @@ test('restore item type', function () {
 
     $response = $this->patchJson(route('item_types.restore', ['itemType' => $itemType->uuid]));
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 
     expect($itemType->fresh()->trashed())->toBeFalse();
 });

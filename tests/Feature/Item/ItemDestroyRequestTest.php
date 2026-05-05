@@ -12,7 +12,7 @@ test('destroy item', function () {
 
     $response = $this->deleteJson(route('items.destroy', ['item' => $item->uuid]));
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 
     expect($item->fresh()->trashed())->toBeTrue();
 });

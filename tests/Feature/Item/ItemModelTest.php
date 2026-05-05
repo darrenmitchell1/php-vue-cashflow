@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Enums\Flow;
 use App\Enums\Frequency;
 use App\Models\ItemTransaction;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 test('Can Create Item', function () {
@@ -27,4 +28,36 @@ test('Can Create Item', function () {
     expect($item->itemTransactions)
         ->toBeInstanceOf(Collection::class)
         ->toHaveCount(3);
+});
+
+test('End Date Accessor Attribute', function () {
+    $itemType = ItemType::factory()->create();
+
+    $singleItem = Item::factory()
+            ->for($itemType)
+            ->create([
+                'frequency' => Frequency::SINGLE,
+                'start_date' => Carbon::today(),
+                'number_of_transactions' => 1,
+                ]);
+
+    $weeklyItemSingle = Item::factory()
+            ->for($itemType)
+            ->create([
+                'frequency' => Frequency::WEEKLY,
+                'start_date' => Carbon::today()->addDays(2),
+                'number_of_transactions' => 1,
+                ]);
+
+    $weeklyItemMultiple = Item::factory()
+            ->for($itemType)
+            ->create([
+                'frequency' => Frequency::WEEKLY,
+                'start_date' => Carbon::today()->addDays(4),
+                'number_of_transactions' => 3,
+                ]);
+
+    expect($singleItem->end_date)->toEqual(Carbon::today());
+    expect($weeklyItemSingle->end_date)->toEqual(Carbon::today()->addDays(2));
+    expect($weeklyItemMultiple->end_date)->toEqual(Carbon::today()->addDays(4)->addWeeks(2));
 });

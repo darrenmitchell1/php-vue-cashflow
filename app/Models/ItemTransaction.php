@@ -46,7 +46,9 @@ class ItemTransaction extends Model
     }
 
     /**
-     * Get the Item for the Item Transaction
+     * Get the Item for this Item Transaction
+     *
+     * @return BelongsTo
      */
     public function item(): BelongsTo
     {

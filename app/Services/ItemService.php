@@ -19,6 +19,9 @@ class ItemService
 
     /**
      * Create Transactions for the Item
+     * 
+     * The last transaction date will be the so need to reduce num of trans by one so dates are correct
+     * eg. 1 transaction would start and end on same date
      *
      * @return void
      */
@@ -27,6 +30,7 @@ class ItemService
         $interval = $this->item->frequency->interval();
         $startDate = $this->item->start_date->toMutable();
 
+        // add interval afterwards as first transaction date should start on start date
         for ($x = 0; $x < $this->item->number_of_transactions; $x++) {
             ItemTransactionService::create($this->item, $startDate);
 
@@ -62,14 +66,13 @@ class ItemService
     public function syncNumberOfTransactions()
     {
         $interval = $this->item->frequency->interval();
-        $totalInterval = $this->item->frequency->interval($this->item->number_of_transactions);
         $startDate = $this->item->start_date->toMutable();
 
         // delete any transactions that are before the start date
         $this->item->itemTransactions()->whereDate('transaction_date', '<', $startDate)->delete();
 
-        // delete any transactions that are after the end date
-        $this->item->itemTransactions()->whereDate('transaction_date', '>', (clone $startDate)->add($totalInterval))->delete();
+        // delete any transactions that are after the final transaction date
+        $this->item->itemTransactions()->whereDate('transaction_date', '>', $this->item->end_date)->delete();
 
         // create/update transactions
         for ($x = 0; $x < $this->item->number_of_transactions; $x++) {

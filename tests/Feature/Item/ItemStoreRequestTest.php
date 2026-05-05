@@ -20,7 +20,7 @@ test('create item success', function () {
 
     $response = $this->postJson(route('items.store', $payload));
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 });
 
 test('Monthly > 28th Error', function () {

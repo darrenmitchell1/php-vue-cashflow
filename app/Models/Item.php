@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use App\Enums\Flow;
 use App\Enums\Frequency;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Item extends Model
 {
@@ -59,7 +60,31 @@ class Item extends Model
     }
 
     /**
-     * Get the Item Type for the Item
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['itemType'];
+
+    /**
+     * Get the end date.
+     * 
+     * The end date will be the last trasnaction date so need to reduce num of trans by one so dates are correct
+     * eg. 1 transaction would start and end on same date
+     */
+    protected function endDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () 
+                => (clone $this->start_date)
+                        ->add($this->frequency->interval($this->number_of_transactions -1)),
+        );
+    }
+
+    /**
+     * Get the Item Type for this Item
+     *
+     * @return BelongsTo
      */
     public function itemType(): BelongsTo
     {
@@ -67,7 +92,9 @@ class Item extends Model
     }
 
     /**
-     * Get the Item Transactions for the Item
+     * Get the Item Transactions for this Item
+     *
+     * @return HasMany
      */
     public function itemTransactions(): HasMany
     {

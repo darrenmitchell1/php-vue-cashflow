@@ -13,7 +13,7 @@ test('create item type success', function () {
 
     $response = $this->postJson(route('item_types.store', $payload));
 
-    $response->assertStatus(200);
+    $response->assertStatus(302);
 });
 
 test('create item type unique error', function () {
