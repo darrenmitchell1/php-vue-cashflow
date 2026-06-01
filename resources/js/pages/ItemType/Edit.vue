@@ -5,90 +5,156 @@ import { Category } from '@/types/category';
 import { ItemType, ItemTypeError } from '@/types/item-type';
 
 interface Props {
-  itemType: ItemType,
-  categories: Category[],
-  errors: ItemTypeError,
+  itemType: ItemType;
+  categories: Category[];
+  errors: ItemTypeError;
 }
 
 const props = defineProps<Props>();
 
-const updateRoute = update({itemType: props.itemType.id});
+const updateRoute = update({ itemType: props.itemType.id });
 
 const form = useForm({
-    category: props.itemType.category.id,
-    code: props.itemType.code,
-    name: props.itemType.name,
-    description: props.itemType.description,
+  category: props.itemType.category.id,
+  code: props.itemType.code,
+  name: props.itemType.name,
+  description: props.itemType.description,
 });
+
+const inputClass =
+  'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
+
+const selectClass =
+  'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
 </script>
 
 <template>
-  <Head title="Item Types" />
-  
-  <div style="margin-top: 50px; margin-left: 50px;">
-    <Link
-      :href="index()"
-      class="inline-block px-5 py-1.5 hover:text-gray-700 hover:underline"
-    >
-        Types
-    </Link>
-  </div>
+  <Head title="Edit item type" />
 
-  <div class="py-12">
-    <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8 bg-white p-4 shadow-sm sm:rounded-lg sm:p-8 w-1/3">
-      <form @submit.prevent="form.submit(updateRoute.method, updateRoute.url)">
-        
-        <label for="category" class="mt-10 block text-sm font-medium text-gray-700">Category</label>
-        <select v-model="form.category" required class="mt-1 w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">
-            <option v-for="category in props.categories" :id="category.id" :value="category.id" class="break-words whitespace-normal">
-                {{ category.label }}
-            </option>
-        </select>
-        <p class="input-error mt-2" v-if="props.errors.category">{{ props.errors.category }}</p>
+  <div class="min-h-screen bg-gray-50 py-8 text-gray-900">
+    <div class="mx-auto max-w-3xl space-y-8 px-4 sm:px-6 lg:px-8">
+      <nav>
+        <Link
+          :href="index()"
+          class="inline-flex items-center gap-1 text-sm font-medium text-emerald-800 hover:text-emerald-950 hover:underline"
+        >
+          <span aria-hidden="true">&larr;</span>
+          Back to types
+        </Link>
+      </nav>
 
-        <label for="code" class="mt-10 block text-sm font-medium text-gray-700">Code</label>
-        <input
-            id="code"
-            type="text"
-            maxlength="255"
-            class="mt-1 block w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
-            v-model="form.code"
-            required
-            autofocus
-            autocomplete="code"
-        />
-        <p class="input-error mt-2" v-if="props.errors.code">{{ props.errors.code }}</p>
+      <section class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+        <header class="border-b border-emerald-800/20 bg-emerald-700 px-6 py-6 text-white sm:px-8">
+          <p class="text-xs font-semibold tracking-[0.2em] text-emerald-100 uppercase">
+            Cashflow
+          </p>
+          <h1 class="mt-2 text-2xl font-semibold tracking-tight">Edit item type</h1>
+          <p class="mt-2 max-w-xl text-sm text-emerald-100">
+            Update this line type and how it appears on your cashflow statement.
+          </p>
+        </header>
 
-        <label for="name" class="mt-10 block text-sm font-medium text-gray-700">Name</label>
-        <input
-            id="name"
-            type="text"
-            maxlength="255"
-            class="mt-1 block w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
-            v-model="form.name"
-            required
-            autofocus
-            autocomplete="name"
-        />
-        <p class="input-error mt-2" v-if="props.errors.name">{{ props.errors.name }}</p>
+        <form
+          class="space-y-8 px-6 py-6 sm:px-8"
+          @submit.prevent="form.submit(updateRoute.method, updateRoute.url)"
+        >
+          <fieldset class="space-y-5">
+            <legend class="text-sm font-semibold text-gray-900">Classification</legend>
 
-        <label for="description" class="mt-10 block text-sm font-medium text-gray-700">Description</label>
-        <textarea
-            id="description"
-            type="text"
-            maxlength="2000"
-            class="mt-1 min-h-60 w-full rounded-md border border-gray-300"
-            v-model="form.description"
-            required
-            autocomplete="description"
-        />
-        <p class="input-error mt-2" v-if="props.errors.description">{{ props.errors.description }}</p>
+            <div>
+              <label for="category" class="block text-sm font-medium text-gray-700">
+                Category
+              </label>
+              <select id="category" v-model="form.category" required :class="selectClass">
+                <option
+                  v-for="category in props.categories"
+                  :key="category.id"
+                  :value="category.id"
+                >
+                  {{ category.label }}
+                </option>
+              </select>
+              <p v-if="props.errors.category" class="mt-2 text-sm text-red-600">
+                {{ props.errors.category }}
+              </p>
+            </div>
+          </fieldset>
 
-        <div class="mt-4 flex items-center justify-end">
-            <button type="submit">Update</button>
-        </div>
-        
-      </form>
+          <fieldset class="space-y-5 border-t border-gray-100 pt-8">
+            <legend class="text-sm font-semibold text-gray-900">Type details</legend>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="code" class="block text-sm font-medium text-gray-700">Code</label>
+                <input
+                  id="code"
+                  v-model="form.code"
+                  type="text"
+                  maxlength="255"
+                  required
+                  autofocus
+                  autocomplete="off"
+                  :class="inputClass"
+                />
+                <p v-if="props.errors.code" class="mt-2 text-sm text-red-600">
+                  {{ props.errors.code }}
+                </p>
+              </div>
+
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input
+                  id="name"
+                  v-model="form.name"
+                  type="text"
+                  maxlength="255"
+                  required
+                  autocomplete="off"
+                  :class="inputClass"
+                />
+                <p v-if="props.errors.name" class="mt-2 text-sm text-red-600">
+                  {{ props.errors.name }}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <label for="description" class="block text-sm font-medium text-gray-700">
+                Description
+              </label>
+              <textarea
+                id="description"
+                v-model="form.description"
+                maxlength="2000"
+                required
+                rows="5"
+                autocomplete="off"
+                class="mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+              />
+              <p v-if="props.errors.description" class="mt-2 text-sm text-red-600">
+                {{ props.errors.description }}
+              </p>
+            </div>
+          </fieldset>
+
+          <div class="flex flex-wrap items-center justify-end gap-3 border-t border-gray-100 pt-6">
+            <Link
+              :href="index()"
+              class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 shadow-xs transition hover:bg-gray-50 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+            >
+              Cancel
+            </Link>
+            <button
+              type="submit"
+              :disabled="form.processing"
+              class="inline-flex items-center justify-center rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition hover:bg-emerald-800 focus:ring-2 focus:ring-emerald-500/40 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <span v-if="form.processing">Saving…</span>
+              <span v-else>Save changes</span>
+            </button>
+          </div>
+        </form>
+      </section>
     </div>
   </div>
 </template>

@@ -7,155 +7,275 @@ import { Frequency } from '@/types/frequency';
 import { ItemType } from '@/types/item-type';
 
 interface Props {
-  item: Item,
-  itemTypes: ItemType[],
-  flows: Flow[],
-  frequencies: Frequency[],
-  errors: ItemError,
+  item: Item;
+  itemTypes: ItemType[];
+  flows: Flow[];
+  frequencies: Frequency[];
+  errors: ItemError;
 }
 
 const props = defineProps<Props>();
 
-const updateRoute = update({item: props.item.id});
+const updateRoute = update({ item: props.item.id });
 
 const form = useForm({
-    item_type_id: props.item.item_type?.id,
-    flow: props.item.flow.id,
-    frequency: props.item.frequency.id,
-    start_date: new Date(props.item.start_date).toISOString().split('T')[0],
-    number_of_transactions: props.item.number_of_transactions,
-    description: props.item.description,
-    company_name: props.item.company_name,
-    amount: props.item.amount,
-    reference: props.item.reference,
+  item_type_id: props.item.item_type?.id ?? null,
+  flow: props.item.flow.id,
+  frequency: props.item.frequency.id,
+  start_date: new Date(props.item.start_date).toISOString().split('T')[0],
+  number_of_transactions: Number(props.item.number_of_transactions),
+  description: props.item.description,
+  company_name: props.item.company_name,
+  amount: props.item.amount,
+  reference: props.item.reference,
 });
+
+const inputClass =
+  'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
+
+const selectClass =
+  'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
+
+function toDecimal(): void {
+  if (form.amount != null) {
+    form.amount = Number(Number(form.amount).toFixed(2));
+  }
+}
 </script>
 
 <template>
-  <Head title="Item Types" />
-  
-  <div style="margin-top: 50px; margin-left: 50px;">
-    <Link
-      :href="index()"
-      class="inline-block px-5 py-1.5 hover:text-gray-700 hover:underline"
-    >
-        Items
-    </Link>
-  </div>
+  <Head title="Edit item" />
 
-  <div class="py-12">
-    <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8 bg-white p-4 shadow-sm sm:rounded-lg sm:p-8 w-1/3">
-      <form @submit.prevent="form.submit(updateRoute.method, updateRoute.url)">
+  <div class="min-h-screen bg-gray-50 py-8 text-gray-900">
+    <div class="mx-auto max-w-3xl space-y-8 px-4 sm:px-6 lg:px-8">
+      <nav>
+        <Link
+          :href="index()"
+          class="inline-flex items-center gap-1 text-sm font-medium text-emerald-800 hover:text-emerald-950 hover:underline"
+        >
+          <span aria-hidden="true">&larr;</span>
+          Back to items
+        </Link>
+      </nav>
 
-        <label for="item_type_id" class="mt-10 block text-sm font-medium text-gray-700">Item Type</label>
-        <select v-model="form.item_type_id" required class="w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">
-            <option v-for="item_type in props.itemTypes" :id="item_type.id" :value="item_type.id" class="break-words whitespace-normal">
-                {{ item_type.name }} - {{ item_type.category.label }}
-            </option>
-        </select>
-        <p class="input-error mt-2" v-if="props.errors.item_type_id">{{ props.errors.item_type_id }}</p>
+      <section class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+        <header class="border-b border-emerald-800/20 bg-emerald-700 px-6 py-6 text-white sm:px-8">
+          <p class="text-xs font-semibold tracking-[0.2em] text-emerald-100 uppercase">
+            Cashflow
+          </p>
+          <h1 class="mt-2 text-2xl font-semibold tracking-tight">Edit item</h1>
+          <p class="mt-2 max-w-xl text-sm text-emerald-100">
+            Update this cashflow item and its generated transactions.
+          </p>
+        </header>
 
-        <label for="flow" class="mt-10 block text-sm font-medium text-gray-700">Flow</label>
-        <select v-model="form.flow" required class="w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">
-            <option v-for="flow in props.flows" :id="flow.id" :value="flow.id" class="break-words whitespace-normal">
-                {{ flow.label }}
-            </option>
-        </select>
-        <p class="input-error mt-2" v-if="props.errors.flow">{{ props.errors.flow }}</p>
+        <form
+          class="space-y-8 px-6 py-6 sm:px-8"
+          @submit.prevent="form.submit(updateRoute.method, updateRoute.url)"
+        >
+          <fieldset class="space-y-5">
+            <legend class="text-sm font-semibold text-gray-900">Classification</legend>
 
-        <label for="frequency" class="mt-10 block text-sm font-medium text-gray-700">Frequency</label>
-        <select v-model="form.frequency" required class="w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500">
-            <option v-for="frequency in props.frequencies" :id="frequency.id" :value="frequency.id" class="break-words whitespace-normal">
-                {{ frequency.label }}
-            </option>
-        </select>
-        <p class="input-error mt-2" v-if="props.errors.frequency">{{ props.errors.frequency }}</p>
+            <div>
+              <label for="item_type_id" class="block text-sm font-medium text-gray-700">
+                Item type
+              </label>
+              <select
+                id="item_type_id"
+                v-model="form.item_type_id"
+                required
+                :class="selectClass"
+              >
+                <option
+                  v-for="itemType in props.itemTypes"
+                  :key="itemType.id"
+                  :value="itemType.id"
+                >
+                  {{ itemType.name }} — {{ itemType.category.label }}
+                </option>
+              </select>
+              <p v-if="props.errors.item_type_id" class="mt-2 text-sm text-red-600">
+                {{ props.errors.item_type_id }}
+              </p>
+            </div>
 
-        <label for="start_date" class="mt-10 block text-sm font-medium text-gray-700">Start Date</label>
-        <input
-            id="start_date"
-            type="date"
-            class="mt-1 block w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
-            v-model="form.start_date"
-            required
-            autofocus
-            autocomplete="start_date"
-        />
-        <p class="input-error mt-2" v-if="props.errors.start_date">{{ props.errors.start_date }}</p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="flow" class="block text-sm font-medium text-gray-700">Flow</label>
+                <select id="flow" v-model="form.flow" required :class="selectClass">
+                  <option v-for="flow in props.flows" :key="flow.id" :value="flow.id">
+                    {{ flow.label }}
+                  </option>
+                </select>
+                <p v-if="props.errors.flow" class="mt-2 text-sm text-red-600">
+                  {{ props.errors.flow }}
+                </p>
+              </div>
 
-        <label for="amount" class="mt-10 block text-sm font-medium text-gray-700">Amount</label>
-        <input
-            id="amount"
-            type="text"
-            inputmode="numeric"
-            min="0.01"
-            max="1000.00"
-            step="0.01"
-            @blur="toDecimal"
-            class="mt-1 block w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
-            v-model.number="form.amount"
-            required
-            autocomplete="amount"
-        />
-        <p class="input-error mt-2" v-if="props.errors.amount">{{ props.errors.amount }}</p>
+              <div>
+                <label for="frequency" class="block text-sm font-medium text-gray-700">
+                  Frequency
+                </label>
+                <select id="frequency" v-model="form.frequency" required :class="selectClass">
+                  <option
+                    v-for="frequency in props.frequencies"
+                    :key="frequency.id"
+                    :value="frequency.id"
+                  >
+                    {{ frequency.label }}
+                  </option>
+                </select>
+                <p v-if="props.errors.frequency" class="mt-2 text-sm text-red-600">
+                  {{ props.errors.frequency }}
+                </p>
+              </div>
+            </div>
+          </fieldset>
 
-        <label for="number_of_transactions" class="mt-10 block text-sm font-medium text-gray-700">Transactions</label>
-        <input
-            id="number_of_transactions"
-            type="number"
-            inputmode="numeric"
-            min="1"
-            max="1000"
-            step="1"
-            class="mt-1 block w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
-            v-model.number="form.number_of_transactions"
-            required
-            autocomplete="number_of_transactions"
-        />
-        <p class="input-error mt-2" v-if="props.errors.number_of_transactions">{{ props.errors.number_of_transactions }}</p>
+          <fieldset class="space-y-5 border-t border-gray-100 pt-8">
+            <legend class="text-sm font-semibold text-gray-900">Schedule &amp; amount</legend>
 
-        <label for="company_name" class="mt-10 block text-sm font-medium text-gray-700">Company Name</label>
-        <input
-            id="company_name"
-            type="text"
-            maxlength="255"
-            class="mt-1 block w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
-            v-model="form.company_name"
-            required
-            autofocus
-            autocomplete="company_name"
-        />
-        <p class="input-error mt-2" v-if="props.errors.company_name">{{ props.errors.company_name }}</p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="start_date" class="block text-sm font-medium text-gray-700">
+                  Start date
+                </label>
+                <input
+                  id="start_date"
+                  v-model="form.start_date"
+                  type="date"
+                  required
+                  autofocus
+                  autocomplete="start_date"
+                  :class="inputClass"
+                />
+                <p v-if="props.errors.start_date" class="mt-2 text-sm text-red-600">
+                  {{ props.errors.start_date }}
+                </p>
+              </div>
 
-        <label for="company_name" class="mt-10 block text-sm font-medium text-gray-700">Reference</label>
-        <input
-            id="reference"
-            type="text"
-            maxlength="255"
-            class="mt-1 block w-full rounded-md border border-gray-300 shadow-xs focus:border-indigo-500 focus:ring-indigo-500"
-            v-model="form.reference"
-            autofocus
-            autocomplete="reference"
-        />
-        <p class="input-error mt-2" v-if="props.errors.reference">{{ props.errors.reference }}</p>
+              <div>
+                <label
+                  for="number_of_transactions"
+                  class="block text-sm font-medium text-gray-700"
+                >
+                  Number of transactions
+                </label>
+                <input
+                  id="number_of_transactions"
+                  v-model.number="form.number_of_transactions"
+                  type="number"
+                  inputmode="numeric"
+                  min="1"
+                  max="1000"
+                  step="1"
+                  required
+                  autocomplete="number_of_transactions"
+                  :class="inputClass"
+                />
+                <p v-if="props.errors.number_of_transactions" class="mt-2 text-sm text-red-600">
+                  {{ props.errors.number_of_transactions }}
+                </p>
+              </div>
+            </div>
 
-        <label for="description" class="mt-10 block text-sm font-medium text-gray-700">Description</label>
-        <textarea
-            id="description"
-            type="text"
-            maxlength="2000"
-            class="mt-1 min-h-60 w-full rounded-md border border-gray-300"
-            v-model="form.description"
-            required
-            autocomplete="description"
-        />
-        <p class="input-error mt-2" v-if="props.errors.description">{{ props.errors.description }}</p>
+            <div class="sm:w-1/2">
+              <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+              <input
+                id="amount"
+                v-model.number="form.amount"
+                type="text"
+                inputmode="decimal"
+                min="0.01"
+                max="1000"
+                step="0.01"
+                required
+                autocomplete="amount"
+                :class="inputClass"
+                @blur="toDecimal"
+              />
+              <p v-if="props.errors.amount" class="mt-2 text-sm text-red-600">
+                {{ props.errors.amount }}
+              </p>
+            </div>
+          </fieldset>
 
-        <div class="mt-4 flex items-center justify-end">
-            <button type="submit">Update</button>
-        </div>
+          <fieldset class="space-y-5 border-t border-gray-100 pt-8">
+            <legend class="text-sm font-semibold text-gray-900">Details</legend>
 
-      </form>
+            <div>
+              <label for="company_name" class="block text-sm font-medium text-gray-700">
+                Company name
+              </label>
+              <input
+                id="company_name"
+                v-model="form.company_name"
+                type="text"
+                maxlength="255"
+                required
+                autocomplete="organization"
+                :class="inputClass"
+              />
+              <p v-if="props.errors.company_name" class="mt-2 text-sm text-red-600">
+                {{ props.errors.company_name }}
+              </p>
+            </div>
+
+            <div>
+              <label for="reference" class="block text-sm font-medium text-gray-700">
+                Reference
+                <span class="font-normal text-gray-500">(optional)</span>
+              </label>
+              <input
+                id="reference"
+                v-model="form.reference"
+                type="text"
+                maxlength="255"
+                autocomplete="off"
+                :class="inputClass"
+              />
+              <p v-if="props.errors.reference" class="mt-2 text-sm text-red-600">
+                {{ props.errors.reference }}
+              </p>
+            </div>
+
+            <div>
+              <label for="description" class="block text-sm font-medium text-gray-700">
+                Description
+              </label>
+              <textarea
+                id="description"
+                v-model="form.description"
+                maxlength="2000"
+                required
+                rows="5"
+                autocomplete="off"
+                class="mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+              />
+              <p v-if="props.errors.description" class="mt-2 text-sm text-red-600">
+                {{ props.errors.description }}
+              </p>
+            </div>
+          </fieldset>
+
+          <div class="flex flex-wrap items-center justify-end gap-3 border-t border-gray-100 pt-6">
+            <Link
+              :href="index()"
+              class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 shadow-xs transition hover:bg-gray-50 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+            >
+              Cancel
+            </Link>
+            <button
+              type="submit"
+              :disabled="form.processing"
+              class="inline-flex items-center justify-center rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition hover:bg-emerald-800 focus:ring-2 focus:ring-emerald-500/40 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <span v-if="form.processing">Saving…</span>
+              <span v-else>Save changes</span>
+            </button>
+          </div>
+        </form>
+      </section>
     </div>
   </div>
 </template>

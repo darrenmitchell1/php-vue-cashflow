@@ -1,53 +1,79 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import ItemTypeController from '@/actions/App/Http/Controllers/ItemTypeController';
-import items from "@/routes/items";
-import statement from "@/routes/statement";
+import items from '@/routes/items';
+import statement from '@/routes/statement';
+
+const sections = [
+  {
+    title: 'Item types',
+    description: 'Define cashflow categories and line types used when recording transactions.',
+    href: ItemTypeController.index(),
+    cta: 'Manage types',
+  },
+  {
+    title: 'Items',
+    description: 'Create recurring or one-off cashflow items and generate their transactions.',
+    href: items.index(),
+    cta: 'Manage items',
+  },
+  {
+    title: 'Statement',
+    description: 'Generate a statement of cash flows for any reporting period.',
+    href: statement.index(),
+    cta: 'View statement',
+  },
+];
 </script>
 
 <template>
-    <Head title="Cashflow" />
-    <div
-        class="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]"
-    >
-        <main
-            class="flex w-full max-w-[335px] flex-col-reverse overflow-hidden rounded-lg lg:max-w-4xl lg:flex-row"
-        >
-            <div
-                class="flex-1 rounded-br-lg rounded-bl-lg bg-white p-6 pb-12 text-[13px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] lg:rounded-tl-lg lg:rounded-br-none lg:p-20 dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]"
+  <Head title="Cashflow" />
+
+  <div class="min-h-screen bg-gray-50 py-8 text-gray-900">
+    <div class="mx-auto max-w-4xl space-y-8 px-4 sm:px-6 lg:px-8">
+      <section class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+        <header class="border-b border-emerald-800/20 bg-emerald-700 px-6 py-8 text-white sm:px-8">
+          <p class="text-xs font-semibold tracking-[0.2em] text-emerald-100 uppercase">
+            Cashflow
+          </p>
+          <h1 class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+            Cashflow management
+          </h1>
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-emerald-100">
+            Record item transactions against pre-defined types, then produce a statement of cash
+            flows for any period.
+          </p>
+        </header>
+
+        <div class="grid gap-4 p-6 sm:grid-cols-3 sm:p-8">
+          <Link
+            v-for="section in sections"
+            :key="section.title"
+            :href="section.href"
+            class="group flex flex-col rounded-lg border border-gray-200 bg-gray-50/50 p-5 transition hover:border-emerald-300 hover:bg-emerald-50/50 hover:shadow-sm focus:ring-2 focus:ring-emerald-500/40 focus:outline-none"
+          >
+            <h2 class="font-semibold text-gray-900 group-hover:text-emerald-900">
+              {{ section.title }}
+            </h2>
+            <p class="mt-2 flex-1 text-sm leading-relaxed text-gray-600">
+              {{ section.description }}
+            </p>
+            <span
+              class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-emerald-700 group-hover:text-emerald-900"
             >
-                <h1 class="mb-1 font-medium">Cashflow</h1>
-                <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">
-                    Cashflow App to create Cashflow Item Transactions for specific pre-defined Types <br />
-                    and produce a Cashflow Statement for a Period.
-                </p>
-                <ul class="flex gap-3 text-sm leading-normal">
-                    <li>
-                        <Link
-                            :href="ItemTypeController.index()"
-                            class="inline-block px-5 py-1.5 hover:text-gray-700 hover:underline"
-                        >
-                            Types
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            :href="items.index()"
-                            class="inline-block px-5 py-1.5 hover:text-gray-700 hover:underline"
-                        >
-                            Items
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            :href="statement.index()"
-                            class="inline-block px-5 py-1.5 hover:text-gray-700 hover:underline"
-                        >
-                            Statement
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-        </main>
+              {{ section.cta }}
+              <span
+                class="transition group-hover:translate-x-0.5"
+                aria-hidden="true"
+              >&rarr;</span>
+            </span>
+          </Link>
+        </div>
+      </section>
+
+      <p class="text-center text-xs text-gray-500">
+        Operating, investing and financing activities roll up into your period statement.
+      </p>
     </div>
+  </div>
 </template>
