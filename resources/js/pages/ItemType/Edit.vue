@@ -65,18 +65,9 @@ const selectClass =
               <label for="category" class="block text-sm font-medium text-gray-700">
                 Category
               </label>
-              <select id="category" v-model="form.category" required :class="selectClass">
-                <option
-                  v-for="category in props.categories"
-                  :key="category.id"
-                  :value="category.id"
-                >
-                  {{ category.label }}
-                </option>
-              </select>
-              <p v-if="props.errors.category" class="mt-2 text-sm text-red-600">
-                {{ props.errors.category }}
-              </p>
+                <p id="category" :class="inputClass" class="block text-sm font-medium text-gray-700" style="background-color: #f0f0f0">
+                  {{ props.itemType.category.label }}
+                </p>
             </div>
           </fieldset>
 
@@ -86,18 +77,8 @@ const selectClass =
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
                 <label for="code" class="block text-sm font-medium text-gray-700">Code</label>
-                <input
-                  id="code"
-                  v-model="form.code"
-                  type="text"
-                  maxlength="255"
-                  required
-                  autofocus
-                  autocomplete="off"
-                  :class="inputClass"
-                />
-                <p v-if="props.errors.code" class="mt-2 text-sm text-red-600">
-                  {{ props.errors.code }}
+                <p id="code" :class="inputClass" class="block text-sm font-medium text-gray-700" style="background-color: #f0f0f0">
+                  {{ props.itemType.code }}
                 </p>
               </div>
 

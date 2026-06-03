@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { index, store } from '@/routes/items';
 import { ItemError } from '@/types/item';
 import { Flow } from '@/types/flow';
 import { Frequency } from '@/types/frequency';
 import { ItemType } from '@/types/item-type';
+import { toEndDate } from '@/lib/date-formatters';
 
 interface Props {
   itemTypes: ItemType[];
@@ -34,8 +36,16 @@ const selectClass =
   'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
 
 function toDecimal(): void {
-  if (form.amount != null && form.amount !== '') {
+  if (form.amount != null) {
     form.amount = Number(Number(form.amount).toFixed(2));
+  }
+}
+
+const itemEndDte = ref('');
+
+function setEndDate() : void {
+  if (form.start_date != null && form.frequency != null && form.number_of_transactions != null) {
+    itemEndDte.value = toEndDate(new Date(form.start_date), form.frequency, form.number_of_transactions).toISOString().split('T')[0];
   }
 }
 </script>
@@ -120,7 +130,7 @@ function toDecimal(): void {
                 <label for="frequency" class="block text-sm font-medium text-gray-700">
                   Frequency
                 </label>
-                <select id="frequency" v-model="form.frequency" required :class="selectClass">
+                <select id="frequency" v-model="form.frequency" required :class="selectClass" @blur="setEndDate()">
                   <option disabled value="">Select frequency…</option>
                   <option
                     v-for="frequency in props.frequencies"
@@ -153,6 +163,7 @@ function toDecimal(): void {
                   autofocus
                   autocomplete="start_date"
                   :class="inputClass"
+                  @blur="setEndDate()"
                 />
                 <p v-if="props.errors.start_date" class="mt-2 text-sm text-red-600">
                   {{ props.errors.start_date }}
@@ -177,9 +188,13 @@ function toDecimal(): void {
                   required
                   autocomplete="number_of_transactions"
                   :class="inputClass"
+                  @blur="setEndDate()"
                 />
                 <p v-if="props.errors.number_of_transactions" class="mt-2 text-sm text-red-600">
                   {{ props.errors.number_of_transactions }}
+                </p>
+                <p class="text-sm font-medium text-gray-700">
+                  {{ itemEndDte }}
                 </p>
               </div>
             </div>

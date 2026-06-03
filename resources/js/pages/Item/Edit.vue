@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { index, update } from '@/routes/items';
 import { Item, ItemError } from '@/types/item';
 import { Flow } from '@/types/flow';
 import { Frequency } from '@/types/frequency';
 import { ItemType } from '@/types/item-type';
+import { toEndDate } from '@/lib/date-formatters';
 
 interface Props {
   item: Item;
@@ -41,6 +43,16 @@ function toDecimal(): void {
     form.amount = Number(Number(form.amount).toFixed(2));
   }
 }
+
+const itemEndDte = ref('');
+
+function setEndDate() : void {
+  if (form.start_date != null && form.frequency != null && form.number_of_transactions != null) {
+    itemEndDte.value = toEndDate(new Date(form.start_date), form.frequency, form.number_of_transactions).toISOString().split('T')[0];
+  }
+}
+
+setEndDate();
 </script>
 
 <template>
@@ -116,7 +128,7 @@ function toDecimal(): void {
                 <label for="frequency" class="block text-sm font-medium text-gray-700">
                   Frequency
                 </label>
-                <select id="frequency" v-model="form.frequency" required :class="selectClass">
+                <select id="frequency" v-model="form.frequency" required :class="selectClass" @blur="setEndDate()">
                   <option
                     v-for="frequency in props.frequencies"
                     :key="frequency.id"
@@ -148,6 +160,7 @@ function toDecimal(): void {
                   autofocus
                   autocomplete="start_date"
                   :class="inputClass"
+                  @blur="setEndDate()"
                 />
                 <p v-if="props.errors.start_date" class="mt-2 text-sm text-red-600">
                   {{ props.errors.start_date }}
@@ -172,9 +185,13 @@ function toDecimal(): void {
                   required
                   autocomplete="number_of_transactions"
                   :class="inputClass"
+                  @blur="setEndDate()"
                 />
                 <p v-if="props.errors.number_of_transactions" class="mt-2 text-sm text-red-600">
                   {{ props.errors.number_of_transactions }}
+                </p>
+                <p class="text-sm font-medium text-gray-700">
+                  {{ itemEndDte }}
                 </p>
               </div>
             </div>

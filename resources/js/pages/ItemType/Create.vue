@@ -3,6 +3,7 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 import { index, store } from '@/routes/item_types';
 import { Category } from '@/types/category';
 import { ItemTypeError } from '@/types/item-type';
+import { toAlphaDash } from '@/lib/text-formatters.js'
 
 interface Props {
   categories: Category[];
@@ -23,6 +24,10 @@ const inputClass =
 
 const selectClass =
   'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
+
+function handleFormCodeChange(): void {
+    form.code = toAlphaDash(form.code);
+}
 </script>
 
 <template>
@@ -98,6 +103,7 @@ const selectClass =
                   autofocus
                   autocomplete="off"
                   :class="inputClass"
+                  @blur="handleFormCodeChange()"
                 />
                 <p v-if="props.errors.code" class="mt-2 text-sm text-red-600">
                   {{ props.errors.code }}

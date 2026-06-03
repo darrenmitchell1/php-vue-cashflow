@@ -41,7 +41,7 @@ class ItemController extends Controller
         return Inertia::render('Item/Create', [
             'flows' => fn () => Flow::toCollectionResource(),
             'frequencies' => fn () => Frequency::toCollectionResource(),
-            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::get()))->collection
+            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::all()))->collection
         ]);
     }
 
@@ -97,7 +97,7 @@ class ItemController extends Controller
             'item' => $item->toResource(),
             'flows' => fn () => Flow::toCollectionResource(),
             'frequencies' => fn () => Frequency::toCollectionResource(),
-            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::get()))->collection
+            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::all()))->collection
         ]);
     }
 
