@@ -32,12 +32,6 @@ const form = useForm({
   reference: props.item.reference,
 });
 
-const inputClass =
-  'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
-
-const selectClass =
-  'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
-
 function toDecimal(): void {
   if (form.amount != null) {
     form.amount = Number(Number(form.amount).toFixed(2));
@@ -47,8 +41,16 @@ function toDecimal(): void {
 const itemEndDte = ref('');
 
 function setEndDate() : void {
-  if (form.start_date != null && form.frequency != null && form.number_of_transactions != null) {
-    itemEndDte.value = toEndDate(new Date(form.start_date), form.frequency, form.number_of_transactions).toISOString().split('T')[0];
+  try {
+    if (form.start_date != null && form.frequency != null && form.number_of_transactions != null) {
+      itemEndDte.value = toEndDate(new Date(form.start_date), form.frequency, form.number_of_transactions).toISOString().split('T')[0];
+    }
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error("An unexpected error occurred", error);
+    }
   }
 }
 
@@ -89,14 +91,14 @@ setEndDate();
             <legend class="text-sm font-semibold text-gray-900">Classification</legend>
 
             <div>
-              <label for="item_type_id" class="block text-sm font-medium text-gray-700">
+              <label for="item_type_id" class="block form-label">
                 Item type
               </label>
               <select
                 id="item_type_id"
                 v-model="form.item_type_id"
                 required
-                :class="selectClass"
+                class="mt-2 block w-full form-select"
               >
                 <option
                   v-for="itemType in props.itemTypes"
@@ -106,29 +108,29 @@ setEndDate();
                   {{ itemType.name }} — {{ itemType.category.label }}
                 </option>
               </select>
-              <p v-if="props.errors.item_type_id" class="mt-2 text-sm text-red-600">
+              <p v-if="props.errors.item_type_id" class="mt-2 form-error">
                 {{ props.errors.item_type_id }}
               </p>
             </div>
 
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
-                <label for="flow" class="block text-sm font-medium text-gray-700">Flow</label>
-                <select id="flow" v-model="form.flow" required :class="selectClass">
+                <label for="flow" class="block form-label">Flow</label>
+                <select id="flow" v-model="form.flow" required class="mt-2 block w-full form-select">
                   <option v-for="flow in props.flows" :key="flow.id" :value="flow.id">
                     {{ flow.label }}
                   </option>
                 </select>
-                <p v-if="props.errors.flow" class="mt-2 text-sm text-red-600">
+                <p v-if="props.errors.flow" class="mt-2 form-error">
                   {{ props.errors.flow }}
                 </p>
               </div>
 
               <div>
-                <label for="frequency" class="block text-sm font-medium text-gray-700">
+                <label for="frequency" class="block form-label">
                   Frequency
                 </label>
-                <select id="frequency" v-model="form.frequency" required :class="selectClass" @blur="setEndDate()">
+                <select id="frequency" v-model="form.frequency" required class="mt-2 block w-full form-select" @blur="setEndDate()">
                   <option
                     v-for="frequency in props.frequencies"
                     :key="frequency.id"
@@ -137,7 +139,7 @@ setEndDate();
                     {{ frequency.label }}
                   </option>
                 </select>
-                <p v-if="props.errors.frequency" class="mt-2 text-sm text-red-600">
+                <p v-if="props.errors.frequency" class="mt-2 form-error">
                   {{ props.errors.frequency }}
                 </p>
               </div>
@@ -149,7 +151,7 @@ setEndDate();
 
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
-                <label for="start_date" class="block text-sm font-medium text-gray-700">
+                <label for="start_date" class="block form-label">
                   Start date
                 </label>
                 <input
@@ -159,10 +161,10 @@ setEndDate();
                   required
                   autofocus
                   autocomplete="start_date"
-                  :class="inputClass"
+                  class="mt-2 block w-full form-select"
                   @blur="setEndDate()"
                 />
-                <p v-if="props.errors.start_date" class="mt-2 text-sm text-red-600">
+                <p v-if="props.errors.start_date" class="mt-2 form-error">
                   {{ props.errors.start_date }}
                 </p>
               </div>
@@ -170,7 +172,7 @@ setEndDate();
               <div>
                 <label
                   for="number_of_transactions"
-                  class="block text-sm font-medium text-gray-700"
+                  class="block form-label"
                 >
                   Number of transactions
                 </label>
@@ -184,20 +186,20 @@ setEndDate();
                   step="1"
                   required
                   autocomplete="number_of_transactions"
-                  :class="inputClass"
+                  class="mt-2 block w-full form-input"
                   @blur="setEndDate()"
                 />
-                <p v-if="props.errors.number_of_transactions" class="mt-2 text-sm text-red-600">
+                <p v-if="props.errors.number_of_transactions" class="mt-2 form-error">
                   {{ props.errors.number_of_transactions }}
                 </p>
-                <p class="text-sm font-medium text-gray-700">
+                <p class="form-label">
                   {{ itemEndDte }}
                 </p>
               </div>
             </div>
 
             <div class="sm:w-1/2">
-              <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+              <label for="amount" class="block form-label">Amount</label>
               <input
                 id="amount"
                 v-model.number="form.amount"
@@ -208,10 +210,10 @@ setEndDate();
                 step="0.01"
                 required
                 autocomplete="amount"
-                :class="inputClass"
+                class="mt-2 block w-full form-input"
                 @blur="toDecimal"
               />
-              <p v-if="props.errors.amount" class="mt-2 text-sm text-red-600">
+              <p v-if="props.errors.amount" class="mt-2 form-error">
                 {{ props.errors.amount }}
               </p>
             </div>
@@ -221,7 +223,7 @@ setEndDate();
             <legend class="text-sm font-semibold text-gray-900">Details</legend>
 
             <div>
-              <label for="company_name" class="block text-sm font-medium text-gray-700">
+              <label for="company_name" class="block form-label">
                 Company name
               </label>
               <input
@@ -231,15 +233,15 @@ setEndDate();
                 maxlength="255"
                 required
                 autocomplete="organization"
-                :class="inputClass"
+                class="mt-2 block w-full form-input"
               />
-              <p v-if="props.errors.company_name" class="mt-2 text-sm text-red-600">
+              <p v-if="props.errors.company_name" class="mt-2 form-error">
                 {{ props.errors.company_name }}
               </p>
             </div>
 
             <div>
-              <label for="reference" class="block text-sm font-medium text-gray-700">
+              <label for="reference" class="block form-label">
                 Reference
                 <span class="font-normal text-gray-500">(optional)</span>
               </label>
@@ -249,15 +251,15 @@ setEndDate();
                 type="text"
                 maxlength="255"
                 autocomplete="off"
-                :class="inputClass"
+                class="mt-2 block w-full form-input"
               />
-              <p v-if="props.errors.reference" class="mt-2 text-sm text-red-600">
+              <p v-if="props.errors.reference" class="mt-2 form-error">
                 {{ props.errors.reference }}
               </p>
             </div>
 
             <div>
-              <label for="description" class="block text-sm font-medium text-gray-700">
+              <label for="description" class="block form-label">
                 Description
               </label>
               <textarea
@@ -267,9 +269,9 @@ setEndDate();
                 required
                 rows="5"
                 autocomplete="off"
-                class="mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+                class="mt-2 block w-full form-textarea"
               />
-              <p v-if="props.errors.description" class="mt-2 text-sm text-red-600">
+              <p v-if="props.errors.description" class="mt-2 form-error">
                 {{ props.errors.description }}
               </p>
             </div>
