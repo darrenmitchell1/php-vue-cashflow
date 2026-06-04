@@ -1,4 +1,4 @@
-function toAlphaDash(textString: string = ''): string | null {
+function toAlphaDash(textString: string = ''): string {
   if (textString != null && textString !== '') {
     return textString.toLowerCase()                  // Convert to lowercase
                     .trim()                          // Remove leading/trailing spaces
@@ -8,7 +8,7 @@ function toAlphaDash(textString: string = ''): string | null {
                     .replace(/_+/g, '_');            // Collapse multiple underscores into one           
   }
 
-  return null;
+  return '';
 }
 
 export { toAlphaDash }

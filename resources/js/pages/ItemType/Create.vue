@@ -14,16 +14,10 @@ const props = defineProps<Props>();
 
 const form = useForm({
   category: null as string | null,
-  code: null as string | null,
+  code: '' as string,
   name: null as string | null,
   description: null as string | null,
 });
-
-const inputClass =
-  'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
-
-const selectClass =
-  'mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none';
 
 function handleFormCodeChange(): void {
     form.code = toAlphaDash(form.code);
@@ -69,10 +63,10 @@ function handleFormCodeChange(): void {
             <legend class="text-sm font-semibold text-gray-900">Classification</legend>
 
             <div>
-              <label for="category" class="block text-sm font-medium text-gray-700">
+              <label for="category" class="block form-label">
                 Category
               </label>
-              <select id="category" v-model="form.category" required :class="selectClass">
+              <select id="category" v-model="form.category" required class="mt-2 block w-full form-select">
                 <option disabled value="">Select a category…</option>
                 <option
                   v-for="category in props.categories"
@@ -82,7 +76,7 @@ function handleFormCodeChange(): void {
                   {{ category.label }}
                 </option>
               </select>
-              <p v-if="props.errors.category" class="mt-2 text-sm text-red-600">
+              <p v-if="props.errors.category" class="mt-2 form-error">
                 {{ props.errors.category }}
               </p>
             </div>
@@ -93,7 +87,7 @@ function handleFormCodeChange(): void {
 
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
-                <label for="code" class="block text-sm font-medium text-gray-700">Code</label>
+                <label for="code" class="block form-label">Code</label>
                 <input
                   id="code"
                   v-model="form.code"
@@ -102,16 +96,16 @@ function handleFormCodeChange(): void {
                   required
                   autofocus
                   autocomplete="off"
-                  :class="inputClass"
+                  class="mt-2 block w-full form-input"
                   @blur="handleFormCodeChange()"
                 />
-                <p v-if="props.errors.code" class="mt-2 text-sm text-red-600">
+                <p v-if="props.errors.code" class="mt-2 form-error">
                   {{ props.errors.code }}
                 </p>
               </div>
 
               <div>
-                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <label for="name" class="block form-label">Name</label>
                 <input
                   id="name"
                   v-model="form.name"
@@ -119,16 +113,16 @@ function handleFormCodeChange(): void {
                   maxlength="255"
                   required
                   autocomplete="off"
-                  :class="inputClass"
+                  class="mt-2 block w-full form-input"
                 />
-                <p v-if="props.errors.name" class="mt-2 text-sm text-red-600">
+                <p v-if="props.errors.name" class="mt-2 form-error">
                   {{ props.errors.name }}
                 </p>
               </div>
             </div>
 
             <div>
-              <label for="description" class="block text-sm font-medium text-gray-700">
+              <label for="description" class="block form-label">
                 Description
               </label>
               <textarea
@@ -138,9 +132,9 @@ function handleFormCodeChange(): void {
                 required
                 rows="5"
                 autocomplete="off"
-                class="mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
+                class="mt-2 block w-full form-textarea"
               />
-              <p v-if="props.errors.description" class="mt-2 text-sm text-red-600">
+              <p v-if="props.errors.description" class="mt-2 form-error">
                 {{ props.errors.description }}
               </p>
             </div>

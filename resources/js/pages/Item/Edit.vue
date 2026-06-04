@@ -55,6 +55,19 @@ function setEndDate() : void {
 }
 
 setEndDate();
+
+const numTransLocked = ref(false);
+
+function handleFreqChange() : void {
+  if (form.frequency === 'single') {
+    form.number_of_transactions = 1;
+    numTransLocked.value = true;
+  } else {
+    numTransLocked.value = false;
+  }
+}
+
+handleFreqChange();
 </script>
 
 <template>
@@ -185,6 +198,7 @@ setEndDate();
                   max="1000"
                   step="1"
                   required
+                  :readonly="numTransLocked"
                   autocomplete="number_of_transactions"
                   class="mt-2 block w-full form-input"
                   @blur="setEndDate()"

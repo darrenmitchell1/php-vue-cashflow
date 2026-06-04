@@ -50,6 +50,17 @@ function setEndDate() : void {
     }
   }
 }
+
+const numTransLocked = ref(false);
+
+function handleFreqChange() : void {
+  if (form.frequency === 'single') {
+    form.number_of_transactions = 1;
+    numTransLocked.value = true;
+  } else {
+    numTransLocked.value = false;
+  }
+}
 </script>
 
 <template>
@@ -132,7 +143,8 @@ function setEndDate() : void {
                 <label for="frequency" class="block form-label">
                   Frequency
                 </label>
-                <select id="frequency" v-model="form.frequency" required class="mt-2 block w-full form-select" @blur="setEndDate()">
+                <select id="frequency" v-model="form.frequency" required class="mt-2 block w-full form-select"
+                       @blur="setEndDate()" @change="handleFreqChange()">
                   <option disabled value="">Select frequency…</option>
                   <option
                     v-for="frequency in props.frequencies"
@@ -188,6 +200,7 @@ function setEndDate() : void {
                   max="1000"
                   step="1"
                   required
+                  :readonly="numTransLocked"
                   autocomplete="number_of_transactions"
                   class="mt-2 block w-full form-input"
                   @blur="setEndDate()"
@@ -195,7 +208,7 @@ function setEndDate() : void {
                 <p v-if="props.errors.number_of_transactions" class="mt-2 form-error">
                   {{ props.errors.number_of_transactions }}
                 </p>
-                <p class="text-sm font-medium text-gray-700">
+                <p class="form-label">
                   {{ itemEndDte }}
                 </p>
               </div>
