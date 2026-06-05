@@ -38,15 +38,22 @@ function toDecimal(): void {
 const itemEndDte = ref('');
 
 function setEndDate() : void {
-  try {
-    if (form.start_date != null && form.frequency != null && form.number_of_transactions != null) {
-      itemEndDte.value = toEndDate(new Date(form.start_date), form.frequency, form.number_of_transactions).toISOString().split('T')[0];
-    }
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error(error.message);
+  if (form.start_date != null && form.frequency != null && form.number_of_transactions != null) {
+    const startDate = new Date(form.start_date);
+    if (form.number_of_transactions === 1) {
+      itemEndDte.value = startDate.getDate() + ' / ' + String(startDate.getMonth() + 1).padStart(2, '0') + ' / ' + startDate.getFullYear();
     } else {
-      console.error("An unexpected error occurred", error);
+      try {
+        const endDate = toEndDate(startDate, form.frequency, form.number_of_transactions);
+        // toISOString adjusts for tz so date can be out by a day
+        itemEndDte.value = endDate.getDate() + ' / ' + String(endDate.getMonth() + 1).padStart(2, '0') + ' / ' + endDate.getFullYear();
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        } else {
+          console.error("An unexpected error occurred", error);
+        }
+      }
     }
   }
 }
@@ -144,7 +151,8 @@ function handleFreqChange() : void {
                   Frequency
                 </label>
                 <select id="frequency" v-model="form.frequency" required class="mt-2 block w-full form-select"
-                       @blur="setEndDate()" @change="handleFreqChange()">
+                      @change="setEndDate(), handleFreqChange()"
+                >
                   <option disabled value="">Select frequency…</option>
                   <option
                     v-for="frequency in props.frequencies"
@@ -177,7 +185,7 @@ function handleFreqChange() : void {
                   autofocus
                   autocomplete="start_date"
                   class="mt-2 block w-full form-input"
-                  @blur="setEndDate()"
+                  @change="setEndDate()"
                 />
                 <p v-if="props.errors.start_date" class="mt-2 form-error">
                   {{ props.errors.start_date }}
@@ -202,8 +210,8 @@ function handleFreqChange() : void {
                   required
                   :readonly="numTransLocked"
                   autocomplete="number_of_transactions"
-                  class="mt-2 block w-full form-input"
-                  @blur="setEndDate()"
+                  class="mt-2 block w-full form-input read-only:bg-[#f0f0f0]"
+                  @change="setEndDate()"
                 />
                 <p v-if="props.errors.number_of_transactions" class="mt-2 form-error">
                   {{ props.errors.number_of_transactions }}
