@@ -18,7 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('item_transaction_id');
             $table->text('content'); 
             $table->integer('chunk_index');
-            $table->vector('embedding', 1536); 
+            $table->vector('embedding', 1536);
+            $table->json('metadata');
+            $table->integer('tokens_count');
             $table->timestamps();
 
             $table->foreign('item_transaction_id')->references('id')->on('item_transactions');
