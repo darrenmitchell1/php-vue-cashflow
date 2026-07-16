@@ -6,7 +6,7 @@
 
 * Composer 2.9.x
 * PHP 8.4.x
-* Laravel 13.2.x
+* Laravel 13.x
 
 * Node 25.8.x
 * NPM 11.11.x
@@ -16,6 +16,10 @@
 * [Tailwind CSS](https://tailwindcss.com/) 4.1.x
 
 * [SQLite](https://sqlite.org/) 3.37.x
+
+## Dependencies
+
+For Retrieval-Augmented Generation (RAG) load SQLite vector ext vec0.so
 
 
 ## Installation
