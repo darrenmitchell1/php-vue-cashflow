@@ -1,5 +1,9 @@
 ## Cashflow Application for Laravel and Vue.
 
+Cashflow application to manage Types, Items, Transactions and produce a Statement.
+
+Retrieval-Augmented Generation (RAG) for querying the cashflow data.
+
 ## Environment
 
 ### PHP + Laravel + Inertia.js + Vue.js + TypeScript + Wayfinder + Tailwind.css + PostgreSQL
@@ -15,23 +19,31 @@
 * [Wayfinder Router](https://github.com/laravel/wayfinder) 0.1.x
 * [Tailwind CSS](https://tailwindcss.com/) 4.1.x
 
-## Dependencies
 
-For Retrieval-Augmented Generation (RAG) load SQLite vector ext vec0.so
+## Installation
 
-## Start PostgreSQL
+copy the .env.example to make .env and configure
+
 starts the app and testing postgresql dbs
-
 ```
 $ docker compose up -d
 ```
 
-## Installation (Once Only)
-
+enable the vector extension for both app and testing db
 ```
-$ composer run setup
+$ docker exec -it <container id> psql -U <user> -d <database>
+
+<database>=# CREATE EXTENSION IF NOT EXISTS vector;
 ```
 
+setup the app (once)
+```
+$ composer install
+$ php artisan key:generate
+$ php artisan migrate
+$ npm install
+$ npm run build
+```
 
 ## Start Application
 
