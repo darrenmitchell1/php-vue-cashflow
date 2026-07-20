@@ -15,12 +15,11 @@ return new class extends Migration
 
         Schema::create('cashflow_embeddings', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('item_transaction_id');
-            $table->text('content'); 
+            $table->text('content');  // Human readable text passed to LLM
             $table->integer('chunk_index');
             $table->vector('embedding', 1536);
-            $table->json('metadata');
-            $table->integer('tokens_count');
             $table->timestamps();
 
             $table->foreign('item_transaction_id')->references('id')->on('item_transactions');

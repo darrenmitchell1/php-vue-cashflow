@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\ItemTransaction;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ItemTransactionService
 {
@@ -26,12 +27,20 @@ class ItemTransactionService
      */
     public static function create(Item $item, Carbon $transactionDate): ItemTransaction
     {
-        return ItemTransaction::create([
+        $itemTransaction = ItemTransaction::create([
             'uuid' => Str::orderedUuid(),
             'item_id' => $item->id,
             'transaction_date' => $transactionDate,
             'amount' => $item->amount
         ]);
+
+        try {
+            CashflowEmbeddingService::create($itemTransaction);
+        } catch (Throwable $e) {
+            report($e);
+        }
+
+        return $itemTransaction;
     }
 
     /**
