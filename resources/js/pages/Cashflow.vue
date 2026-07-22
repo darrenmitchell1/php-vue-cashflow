@@ -23,6 +23,12 @@ const sections = [
     href: statement.index(),
     cta: 'View statement',
   },
+  {
+    title: 'Analyser',
+    description: 'Analyse Item Transactions using AI Agent.',
+    href: '',
+    cta: 'Analyse Cashflow Item Transactions',
+  },
 ];
 </script>
 
