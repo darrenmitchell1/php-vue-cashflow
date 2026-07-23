@@ -19,8 +19,19 @@ Retrieval-Augmented Generation (RAG) for querying the cashflow data.
 * [Wayfinder Router](https://github.com/laravel/wayfinder) 0.1.x
 * [Tailwind CSS](https://tailwindcss.com/) 4.1.x
 
+## AI Agent - Ollama
+Using Ollama driver locally so need to install on os.
+If using different vector embedding then the vector spaces may be different so need to update:
+
+.env : AI_DRIVER \
+Migration: $table->vector('embedding', 768);
 
 ## Installation
+
+Install [Ollama](https://docs.ollama.com/quickstart#1-download-ollama)
+```
+$ ollama pull nomic-embed-text
+```
 
 copy the .env.example to make .env and configure
 
@@ -48,6 +59,7 @@ $ npm run build
 ## Start Application
 
 ```
+$ docker compose up -d
 $ composer run dev
 ```
 
@@ -56,5 +68,7 @@ Tests are written with the PEST framework.
 
 Run tests
 ```
+$ docker compose up -d
+
 $ ./vendor/bin/pest
 ```

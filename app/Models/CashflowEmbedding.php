@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CashflowEmbedding extends Model
 {
@@ -43,12 +43,10 @@ class CashflowEmbedding extends Model
     }
 
     /**
-     * Get the Item Transaction for this Embeddings
-     *
-     * @return HasOne
+     * Get the Item Transaction for this Embedding
      */
-    public function item(): HasOne
+    public function itemTransaction(): BelongsTo
     {
-        return $this->hasOne(ItemTransaction::class, 'id', 'item_transaction_id');
+        return $this->belongsTo(ItemTransaction::class);
     }
 }

@@ -33,4 +33,5 @@ Route::get('/statement/show', [StatementController::class, 'show'])->name('state
 
 
 Route::get('/cashflow-analyser/show', [CashflowAnalyserController::class, 'show'])->name('cashflow-analyser.show');
-Route::get('/cashflow-analyser/prompt', [CashflowAnalyserController::class, 'prompt'])->name('cashflow-analyser.prompt');
+// @TODO Laravel 14 use Route::query
+Route::match(['QUERY'], '/cashflow-analyser/prompt', [CashflowAnalyserController::class, 'prompt'])->name('cashflow-analyser.prompt');

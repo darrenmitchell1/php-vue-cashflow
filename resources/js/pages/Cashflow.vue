@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import ItemTypeController from '@/actions/App/Http/Controllers/ItemTypeController';
 import items from '@/routes/items';
 import statement from '@/routes/statement';
+import cashflowAnalyser from '@/routes/cashflow-analyser';
 
 const sections = [
   {
@@ -26,7 +27,7 @@ const sections = [
   {
     title: 'Analyser',
     description: 'Analyse Item Transactions using AI Agent.',
-    href: '',
+    href: cashflowAnalyser.show(),
     cta: 'Analyse Cashflow Item Transactions',
   },
 ];

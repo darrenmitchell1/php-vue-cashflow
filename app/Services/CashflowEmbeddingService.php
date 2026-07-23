@@ -32,9 +32,7 @@ class CashflowEmbeddingService
             'uuid' => Str::orderedUuid(),
             'item_transaction_id' => $itemTransaction->id,
             'content' => $textChunk,
-            'chunk_index',
             'embedding' => Str::of($textChunk)->toEmbeddings(),
-            'tokens_count'
         ]);
     }
 }

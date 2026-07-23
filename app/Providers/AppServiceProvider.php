@@ -36,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Date::use(CarbonImmutable::class);
 
+        /**
+         * Block data-wiping commands in production
+         * db:wipe and deleteable migrate
+         */
         DB::prohibitDestructiveCommands(
             app()->isProduction(),
         );

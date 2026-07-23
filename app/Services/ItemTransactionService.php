@@ -57,6 +57,12 @@ class ItemTransactionService
             'transaction_date' => $transactionDate,
             'amount' => $item->amount
         ]);
+        
+        try {
+            CashflowEmbeddingService::create($itemTransaction);
+        } catch (Throwable $e) {
+            report($e);
+        }
 
         return $itemTransaction;
     }

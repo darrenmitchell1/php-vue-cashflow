@@ -18,11 +18,10 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('item_transaction_id');
             $table->text('content');  // Human readable text passed to LLM
-            $table->integer('chunk_index');
-            $table->vector('embedding', 1536);
+            $table->vector('embedding', 768);
             $table->timestamps();
 
-            $table->foreign('item_transaction_id')->references('id')->on('item_transactions');
+            $table->foreign('item_transaction_id')->references('id')->on('item_transactions')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

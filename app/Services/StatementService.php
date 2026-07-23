@@ -30,14 +30,14 @@ class StatementService
         $itemTypes = ItemType::withTrashed()
             ->with([
                 'items' => function ($query) use ($periodFrom, $periodTo) {
-                    $query->with(['itemTransactions'])
-                        ->where('start_date', '<=', $periodTo)
-                        ->whereNotNull('item_transactions_sum_amount')  // ignore where no transactions found
+                    $query->where('start_date', '<=', $periodTo)
+                        ->whereHas('itemTransactions', function ($query) use ($periodFrom, $periodTo) {
+                                $query->whereBetween('transaction_date', [$periodFrom, $periodTo]);
+                            })                    
                         ->withSum([
                             'itemTransactions' => function ($query) use ($periodFrom, $periodTo) {
                                 $query->whereBetween('transaction_date', [$periodFrom, $periodTo]);
                             }], 'amount');
-
                 }])
             ->get();
 
