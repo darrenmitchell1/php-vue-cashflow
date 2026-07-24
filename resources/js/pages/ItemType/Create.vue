@@ -15,12 +15,16 @@ const props = defineProps<Props>();
 const form = useForm({
   category: null as string | null,
   code: '' as string,
-  name: null as string | null,
+  name: '' as string,
   description: null as string | null,
 });
 
 function handleFormCodeChange(): void {
     form.code = toAlphaDash(form.code);
+}
+
+function handleFormNameChange(): void {
+    form.code = toAlphaDash(form.name);
 }
 </script>
 
@@ -114,6 +118,7 @@ function handleFormCodeChange(): void {
                   required
                   autocomplete="off"
                   class="mt-2 block w-full form-input"
+                  @blur="handleFormNameChange()"
                 />
                 <p v-if="props.errors.name" class="mt-2 form-error">
                   {{ props.errors.name }}

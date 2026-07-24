@@ -22,7 +22,7 @@ const form = useForm({
   flow: null as string | null,
   frequency: null as string | null,
   start_date: null as string | null,
-  number_of_transactions: null as number | null,
+  number_of_transactions: 1 as number,
   description: null as string | null,
   company_name: null as string | null,
   amount: null as number | null,
@@ -33,6 +33,10 @@ function toDecimal(): void {
   if (form.amount != null) {
     form.amount = Number(Number(form.amount).toFixed(2));
   }
+}
+
+function handleFormNumTransChange(): void {
+    form.number_of_transactions = Math.floor(form.number_of_transactions);
 }
 
 const itemEndDte = ref('');
@@ -212,7 +216,7 @@ function handleFreqChange() : void {
                   :readonly="numTransLocked"
                   autocomplete="number_of_transactions"
                   class="mt-2 block w-full form-input read-only:bg-[#f0f0f0]"
-                  @change="setEndDate()"
+                  @change="handleFormNumTransChange(), setEndDate()"
                 />
                 <p v-if="props.errors.number_of_transactions" class="mt-2 form-error">
                   {{ props.errors.number_of_transactions }}

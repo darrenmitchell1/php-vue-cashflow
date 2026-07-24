@@ -23,8 +23,6 @@ class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -33,23 +31,18 @@ class ItemController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return Response
      */
     public function create(): Response
     {
         return Inertia::render('Item/Create', [
             'flows' => fn () => Flow::toCollectionResource(),
             'frequencies' => fn () => Frequency::toCollectionResource(),
-            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::all()))->collection
+            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::all()))->collection,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param ItemStoreRequest $request
-     * @return RedirectResponse
      */
     public function store(ItemStoreRequest $request): RedirectResponse
     {
@@ -69,7 +62,7 @@ class ItemController extends Controller
         $item = Item::create(array_merge($request->validated(), [
             'uuid' => Str::orderedUuid(),
             'item_type_id' => $itemType->id,
-            'amount' => $amount
+            'amount' => $amount,
         ]));
 
         ItemCreated::dispatch($item);
@@ -87,9 +80,6 @@ class ItemController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param Item $item
-     * @return Response
      */
     public function edit(Item $item): Response
     {
@@ -97,16 +87,12 @@ class ItemController extends Controller
             'item' => $item->toResource(),
             'flows' => fn () => Flow::toCollectionResource(),
             'frequencies' => fn () => Frequency::toCollectionResource(),
-            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::all()))->collection
+            'itemTypes' => fn () => (new ItemTypeCollection(ItemType::all()))->collection,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param ItemUpdateRequest $request
-     * @param Item $item
-     * @return RedirectResponse
      */
     public function update(ItemUpdateRequest $request, Item $item): RedirectResponse
     {
@@ -116,7 +102,7 @@ class ItemController extends Controller
 
         $changes = [
             'old' => $item->getPrevious(),
-            'new' => $item->getChanges()
+            'new' => $item->getChanges(),
         ];
 
         ItemUpdated::dispatch($item, $changes);
@@ -126,9 +112,6 @@ class ItemController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param Item $item
-     * @return RedirectResponse
      */
     public function destroy(Item $item): RedirectResponse
     {

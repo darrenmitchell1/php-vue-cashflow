@@ -38,6 +38,10 @@ function toDecimal(): void {
   }
 }
 
+function handleFormNumTransChange(): void {
+    form.number_of_transactions = Math.floor(form.number_of_transactions);
+}
+
 const itemEndDte = ref('');
 
 function setEndDate() : void {
@@ -211,7 +215,7 @@ handleFreqChange();
                   :readonly="numTransLocked"
                   autocomplete="number_of_transactions"
                   class="mt-2 block w-full form-input read-only:bg-[#f0f0f0]"
-                  @change="setEndDate()"
+                  @change="handleFormNumTransChange(), setEndDate()"
                 />
                 <p v-if="props.errors.number_of_transactions" class="mt-2 form-error">
                   {{ props.errors.number_of_transactions }}

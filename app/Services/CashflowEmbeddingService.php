@@ -18,14 +18,11 @@ class CashflowEmbeddingService
 
     /**
      * Create an Embedding for a Transaction
-     *
-     * @param ItemTransaction $itemTransaction
-     * @return CashflowEmbedding
      */
     public static function create(ItemTransaction $itemTransaction): CashflowEmbedding
     {
-        $textChunk = "On {$itemTransaction->transaction_date->format('Y-m-d')}, a cashflow transaction of {$itemTransaction->amount} occurred. " .
-                    "Details Description: ($itemTransaction->item->description), Company: {$itemTransaction->item->company_name}, Reference: {$itemTransaction->item->reference}" .
+        $textChunk = "On {$itemTransaction->transaction_date->format('Y-m-d')}, a cashflow transaction of {$itemTransaction->amount} occurred. ".
+                    "Details Description: ($itemTransaction->item->description), Company: {$itemTransaction->item->company_name}, Reference: {$itemTransaction->item->reference}".
                     "This was an {$itemTransaction->item->itemType->category->value} categorized under '{$itemTransaction->item->itemType->name}' with description '{$itemTransaction->item->itemType->description}'. ";
 
         return CashflowEmbedding::create([

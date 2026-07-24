@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
+use App\Enums\Category;
+use Database\Factories\ItemTypeFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
-use App\Enums\Category;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ItemType extends Model
 {
-    /** @use HasFactory<\Database\Factories\ItemTypeFactory> */
+    /** @use HasFactory<ItemTypeFactory> */
     use HasFactory, SoftDeletes;
 
     /**
@@ -33,7 +33,7 @@ class ItemType extends Model
      * @var array
      */
     protected $hidden = [
-        'id'
+        'id',
     ];
 
     /**
@@ -50,8 +50,6 @@ class ItemType extends Model
 
     /**
      * Get the Items for this Item Type
-     *
-     * @return HasMany
      */
     public function items(): HasMany
     {

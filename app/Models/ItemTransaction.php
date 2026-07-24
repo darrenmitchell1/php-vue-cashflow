@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\ItemTransactionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ItemTransaction extends Model
 {
-    /** @use HasFactory<\Database\Factories\ItemTransactionFactory> */
+    /** @use HasFactory<ItemTransactionFactory> */
     use HasFactory;
 
     /**
@@ -21,7 +22,7 @@ class ItemTransaction extends Model
         'uuid',
         'item_id',
         'transaction_date',
-        'amount'
+        'amount',
     ];
 
     /**
@@ -31,7 +32,7 @@ class ItemTransaction extends Model
      */
     protected $hidden = [
         'id',
-        'item_id'
+        'item_id',
     ];
 
     /**
@@ -42,14 +43,12 @@ class ItemTransaction extends Model
     protected function casts(): array
     {
         return [
-            'transaction_date' => 'datetime',            
+            'transaction_date' => 'datetime',
         ];
     }
 
     /**
      * Get the Item for this Item Transaction
-     *
-     * @return BelongsTo
      */
     public function item(): BelongsTo
     {
@@ -58,8 +57,6 @@ class ItemTransaction extends Model
 
     /**
      * Get the Cashflow Embeddings for this Item Transaction
-     *
-     * @return HasOne
      */
     public function cashflowEmbedding(): HasOne
     {

@@ -1,20 +1,19 @@
 <?php
 
-use Carbon\CarbonImmutable;
-use App\Models\ItemType;
-use App\Models\Item;
-
 use App\Enums\Flow;
 use App\Enums\Frequency;
+use App\Models\Item;
 use App\Models\ItemTransaction;
+use App\Models\ItemType;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 
 test('Can Create Item', function () {
     $item = Item::factory()
-            ->for(ItemType::factory()->create())
-            ->has(ItemTransaction::factory()->count(3))
-            ->create();
+        ->for(ItemType::factory()->create())
+        ->has(ItemTransaction::factory()->count(3))
+        ->create();
 
     expect($item)->toBeInstanceOf(Item::class);
 
@@ -34,28 +33,28 @@ test('End Date Accessor Attribute', function () {
     $itemType = ItemType::factory()->create();
 
     $singleItem = Item::factory()
-            ->for($itemType)
-            ->create([
-                'frequency' => Frequency::SINGLE,
-                'start_date' => Carbon::today(),
-                'number_of_transactions' => 1,
-                ]);
+        ->for($itemType)
+        ->create([
+            'frequency' => Frequency::SINGLE,
+            'start_date' => Carbon::today(),
+            'number_of_transactions' => 1,
+        ]);
 
     $weeklyItemSingle = Item::factory()
-            ->for($itemType)
-            ->create([
-                'frequency' => Frequency::WEEKLY,
-                'start_date' => Carbon::today()->addDays(2),
-                'number_of_transactions' => 1,
-                ]);
+        ->for($itemType)
+        ->create([
+            'frequency' => Frequency::WEEKLY,
+            'start_date' => Carbon::today()->addDays(2),
+            'number_of_transactions' => 1,
+        ]);
 
     $weeklyItemMultiple = Item::factory()
-            ->for($itemType)
-            ->create([
-                'frequency' => Frequency::WEEKLY,
-                'start_date' => Carbon::today()->addDays(4),
-                'number_of_transactions' => 3,
-                ]);
+        ->for($itemType)
+        ->create([
+            'frequency' => Frequency::WEEKLY,
+            'start_date' => Carbon::today()->addDays(4),
+            'number_of_transactions' => 3,
+        ]);
 
     expect($singleItem->end_date)->toEqual(Carbon::today());
     expect($weeklyItemSingle->end_date)->toEqual(Carbon::today()->addDays(2));

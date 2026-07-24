@@ -1,17 +1,17 @@
 <?php
 
-use App\Models\ItemType;
+use App\Http\Resources\ItemTransactionResource;
 use App\Models\Item;
 use App\Models\ItemTransaction;
-use App\Http\Resources\ItemTransactionResource;
+use App\Models\ItemType;
 
 test('Item Transaction transformed to Resource', function () {
     $itemTransaction = ItemTransaction::factory()
-            ->for(Item::factory()
-                ->for(ItemType::factory()->create())
-                ->create())
-            ->create();
-    
+        ->for(Item::factory()
+            ->for(ItemType::factory()->create())
+            ->create())
+        ->create();
+
     $itemTransactionResource = (new ItemTransactionResource($itemTransaction))->resolve();
 
     expect($itemTransactionResource)

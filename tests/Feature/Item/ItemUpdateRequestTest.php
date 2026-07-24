@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Event;
 
 test('update item success', function () {
     $item = Item::factory()
-            ->for(ItemType::factory()->create())
-            ->create();
+        ->for(ItemType::factory()->create())
+        ->create();
 
     $payload = [
         'item' => $item->uuid,
@@ -23,7 +23,7 @@ test('update item success', function () {
         'description' => 'Purchase of Stock',
         'company_name' => 'A Supplier',
         'amount' => '1234.56',
-        //'reference' => 'a1',
+        // 'reference' => 'a1',
     ];
 
     Event::fake();

@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Item;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 use App\Enums\Flow;
 use App\Enums\Frequency;
+use App\Models\Item;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Item>
@@ -31,7 +31,7 @@ class ItemFactory extends Factory
             'description' => $this->faker->words(5, true),
             'company_name' => $this->faker->words(2, true),
             'amount' => 123.45,
-            'reference' => null
+            'reference' => null,
         ];
     }
 }

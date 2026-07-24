@@ -1,23 +1,23 @@
 <?php
 
-use App\Models\ItemType;
-use App\Models\Item;
 use App\Enums\Flow;
 use App\Enums\Frequency;
+use App\Models\Item;
+use App\Models\ItemType;
 use App\Services\ItemService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 test('Adjust for Transaction Date Change', function () {
     $item = Item::factory()
-            ->for(ItemType::factory()->create())
-            ->create([
-                'flow' => Flow::IN,
-                'frequency' => Frequency::WEEKLY,
-                'start_date' => Carbon::today()->addDay(),
-                'number_of_transactions' => 3,
-                'amount' => 1.23
-                ]);
+        ->for(ItemType::factory()->create())
+        ->create([
+            'flow' => Flow::IN,
+            'frequency' => Frequency::WEEKLY,
+            'start_date' => Carbon::today()->addDay(),
+            'number_of_transactions' => 3,
+            'amount' => 1.23,
+        ]);
 
     ($itemService = new ItemService($item))->createTransactions();
 
@@ -36,7 +36,7 @@ test('Adjust for Transaction Date Change', function () {
         'flow' => Flow::OUT,
         'frequency' => Frequency::MONTHLY,
         'start_date' => Carbon::today()->day(20)->addDays(5),
-        'amount' => -4.56
+        'amount' => -4.56,
     ]);
 
     $itemService->deleteTransactions();
@@ -57,14 +57,14 @@ test('Adjust for Transaction Date Change', function () {
 
 test('Adjust for Number of Transactions', function () {
     $item = Item::factory()
-            ->for(ItemType::factory()->create())
-            ->create([
-                'flow' => Flow::IN,
-                'frequency' => Frequency::WEEKLY,
-                'start_date' => Carbon::today()->addDay(),
-                'number_of_transactions' => 3,
-                'amount' => 1.23
-                ]);
+        ->for(ItemType::factory()->create())
+        ->create([
+            'flow' => Flow::IN,
+            'frequency' => Frequency::WEEKLY,
+            'start_date' => Carbon::today()->addDay(),
+            'number_of_transactions' => 3,
+            'amount' => 1.23,
+        ]);
 
     (new ItemService($item))->createTransactions();
 
@@ -90,14 +90,14 @@ test('Adjust for Number of Transactions', function () {
 
 test('Adjust for Flow or Amount', function () {
     $item = Item::factory()
-            ->for(ItemType::factory()->create())
-            ->create([
-                'flow' => Flow::IN,
-                'frequency' => Frequency::WEEKLY,
-                'start_date' => Carbon::today()->addDay(),
-                'number_of_transactions' => 3,
-                'amount' => 1.23
-                ]);
+        ->for(ItemType::factory()->create())
+        ->create([
+            'flow' => Flow::IN,
+            'frequency' => Frequency::WEEKLY,
+            'start_date' => Carbon::today()->addDay(),
+            'number_of_transactions' => 3,
+            'amount' => 1.23,
+        ]);
 
     (new ItemService($item))->createTransactions();
 
@@ -113,7 +113,7 @@ test('Adjust for Flow or Amount', function () {
 
     $item->update([
         'flow' => Flow::OUT,
-        'amount' => -4.56
+        'amount' => -4.56,
     ]);
 
     (new ItemService($item))->syncTransactionAmounts();

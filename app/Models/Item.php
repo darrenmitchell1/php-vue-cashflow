@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
+use App\Enums\Flow;
+use App\Enums\Frequency;
+use Database\Factories\ItemFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
-use App\Enums\Flow;
-use App\Enums\Frequency;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
-    /** @use HasFactory<\Database\Factories\ItemFactory> */
+    /** @use HasFactory<ItemFactory> */
     use HasFactory, SoftDeletes;
 
     /**
@@ -32,7 +32,7 @@ class Item extends Model
         'description',
         'company_name',
         'amount',
-        'reference'
+        'reference',
     ];
 
     /**
@@ -42,7 +42,7 @@ class Item extends Model
      */
     protected $hidden = [
         'id',
-        'item_type_id'
+        'item_type_id',
     ];
 
     /**
@@ -68,23 +68,20 @@ class Item extends Model
 
     /**
      * Get the end date.
-     * 
+     *
      * The end date will be the last trasnaction date so need to reduce num of trans by one so dates are correct
      * eg. 1 transaction would start and end on same date
      */
     protected function endDate(): Attribute
     {
         return Attribute::make(
-            get: fn () 
-                => (clone $this->start_date)
-                        ->add($this->frequency->interval($this->number_of_transactions -1)),
+            get: fn () => (clone $this->start_date)
+                ->add($this->frequency->interval($this->number_of_transactions - 1)),
         );
     }
 
     /**
      * Get the Item Type for this Item
-     *
-     * @return BelongsTo
      */
     public function itemType(): BelongsTo
     {
@@ -93,8 +90,6 @@ class Item extends Model
 
     /**
      * Get the Item Transactions for this Item
-     *
-     * @return HasMany
      */
     public function itemTransactions(): HasMany
     {

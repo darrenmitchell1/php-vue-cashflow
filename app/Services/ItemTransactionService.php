@@ -20,10 +20,6 @@ class ItemTransactionService
 
     /**
      * Create a Transaction for an Item
-     *
-     * @param Item $item
-     * @param Carbon $transactionDate
-     * @return ItemTransaction
      */
     public static function create(Item $item, Carbon $transactionDate): ItemTransaction
     {
@@ -31,7 +27,7 @@ class ItemTransactionService
             'uuid' => Str::orderedUuid(),
             'item_id' => $item->id,
             'transaction_date' => $transactionDate,
-            'amount' => $item->amount
+            'amount' => $item->amount,
         ]);
 
         try {
@@ -45,19 +41,14 @@ class ItemTransactionService
 
     /**
      * Update a Transaction for an Item
-     *
-     * @param Item $item
-     * @param ItemTransaction $itemTransaction
-     * @param Carbon $transactionDate
-     * @return ItemTransaction
      */
     public static function update(Item $item, ItemTransaction $itemTransaction, Carbon $transactionDate): ItemTransaction
     {
         $itemTransaction->update([
             'transaction_date' => $transactionDate,
-            'amount' => $item->amount
+            'amount' => $item->amount,
         ]);
-        
+
         try {
             CashflowEmbeddingService::create($itemTransaction);
         } catch (Throwable $e) {

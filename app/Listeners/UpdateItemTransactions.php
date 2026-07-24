@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\ItemUpdated;
 use App\Services\ItemService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Throwable;
 
 class UpdateItemTransactions
@@ -33,7 +31,7 @@ class UpdateItemTransactions
             if ($this->hasChanged($event->itemChanges, 'number_of_transactions')) {
                 $itemService->syncNumberOfTransactions();
             }
-            
+
             if ($this->hasChanged($event->itemChanges, 'flow') || $this->hasChanged($event->itemChanges, 'amount')) {
                 $itemService->syncTransactionAmounts();
             }
@@ -42,10 +40,6 @@ class UpdateItemTransactions
 
     /**
      * Check a key value has chnaged
-     *
-     * @param array $itemChanges
-     * @param string $key
-     * @return boolean
      */
     private function hasChanged(array $itemChanges, string $key): bool
     {
@@ -58,7 +52,7 @@ class UpdateItemTransactions
         }
 
         return false;
-    }    
+    }
 
     /**
      * Handle a job failure.

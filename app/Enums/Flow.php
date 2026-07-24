@@ -20,7 +20,7 @@ enum Flow: string
     {
         return [
             'id' => $this->value,
-            'label' => $this->label()
+            'label' => $this->label(),
         ];
     }
 
@@ -29,7 +29,7 @@ enum Flow: string
         return collect(
             [
                 self::IN->toResource(),
-                self::OUT->toResource()
+                self::OUT->toResource(),
             ]
         );
     }

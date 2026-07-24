@@ -25,8 +25,8 @@ class CashflowAnalyser implements Agent, Conversational, HasStructuredOutput, Ha
      */
     public function instructions(): Stringable|string
     {
-        return 'You are a helpful assistant that analyses cashflow item transactions.' . 
-               'List results by requested order by or default to Item Type, Item and Transaction Date' . 
+        return 'You are a helpful assistant that analyses cashflow item transactions.'.
+               'List results by requested order by or default to Item Type, Item and Transaction Date'.
                'If no results found, state that you do not have this information at the moment';
     }
 
@@ -49,7 +49,7 @@ class CashflowAnalyser implements Agent, Conversational, HasStructuredOutput, Ha
     {
         return [
             SimilaritySearch::usingModel(CashflowEmbedding::class, 'embedding')
-                ->withDescription('Search the Cashflow for matching Item Type Transactions.')
+                ->withDescription('Search the Cashflow for matching Item Type Transactions.'),
         ];
     }
 
@@ -59,7 +59,7 @@ class CashflowAnalyser implements Agent, Conversational, HasStructuredOutput, Ha
     public function schema(JsonSchema $schema): array
     {
         return [
-            'value' => $schema->string()->required()
+            'value' => $schema->string()->required(),
         ];
     }
 }

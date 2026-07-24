@@ -20,10 +20,6 @@ class StatementService
 
     /**
      * Build the Data for the Statement
-     *
-     * @param CarbonImmutable $periodFrom
-     * @param CarbonImmutable $periodTo
-     * @return array
      */
     public static function buildStatementData(CarbonImmutable $periodFrom, CarbonImmutable $periodTo): array
     {
@@ -32,12 +28,12 @@ class StatementService
                 'items' => function ($query) use ($periodFrom, $periodTo) {
                     $query->where('start_date', '<=', $periodTo)
                         ->whereHas('itemTransactions', function ($query) use ($periodFrom, $periodTo) {
-                                $query->whereBetween('transaction_date', [$periodFrom, $periodTo]);
-                            })                    
+                            $query->whereBetween('transaction_date', [$periodFrom, $periodTo]);
+                        })
                         ->withSum([
-                            'itemTransactions' => function ($query) use ($periodFrom, $periodTo) {
-                                $query->whereBetween('transaction_date', [$periodFrom, $periodTo]);
-                            }], 'amount');
+                        'itemTransactions' => function ($query) use ($periodFrom, $periodTo) {
+                            $query->whereBetween('transaction_date', [$periodFrom, $periodTo]);
+                        }], 'amount');
                 }])
             ->get();
 
@@ -49,7 +45,7 @@ class StatementService
         $itemCategoryies = [
             Category::OPERATING->value => ['category' => Category::OPERATING->toResource(), 'category_in_period_amount' => 0, 'category_out_period_amount' => 0],
             Category::INVESTING->value => ['category' => Category::INVESTING->toResource(), 'category_in_period_amount' => 0, 'category_out_period_amount' => 0],
-            Category::FINANCING->value => ['category' => Category::FINANCING->toResource(), 'category_in_period_amount' => 0, 'category_out_period_amount' => 0]
+            Category::FINANCING->value => ['category' => Category::FINANCING->toResource(), 'category_in_period_amount' => 0, 'category_out_period_amount' => 0],
         ];
         foreach ($itemTypes as $itemType) {
             // skip the type where no items
@@ -76,15 +72,15 @@ class StatementService
                 ];
             }
         }
- 
+
         // ensure date formats are YYYY-MM-DDTHH:MM:SS.uuuuuuZ
         return [
             'period_from' => $periodFrom->toIso8601String(),
             'period_to' => $periodTo->toIso8601String(),
-            'opening_in_balance_amount' => ItemTransaction::whereRelation ('item', 'flow', 'in')
+            'opening_in_balance_amount' => ItemTransaction::whereRelation('item', 'flow', 'in')
                 ->whereDate('transaction_date', '<', $periodFrom)
                 ->sum('amount'),
-            'opening_out_balance_amount' => ItemTransaction::whereRelation ('item', 'flow', 'out')
+            'opening_out_balance_amount' => ItemTransaction::whereRelation('item', 'flow', 'out')
                 ->whereDate('transaction_date', '<', $periodFrom)
                 ->sum('amount'),
             'closing_in_balance_amount' => $closingInBalanceAmount,

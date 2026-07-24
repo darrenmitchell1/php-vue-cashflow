@@ -12,14 +12,13 @@ class ItemService
      */
     public function __construct(
         protected Item $item,
-    )
-    {
+    ) {
         //
     }
 
     /**
      * Create Transactions for the Item
-     * 
+     *
      * The last transaction date will be the so need to reduce num of trans by one so dates are correct
      * eg. 1 transaction would start and end on same date
      *

@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Enums\Category;
 use App\Models\ItemType;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
 use Illuminate\Support\Str;
-use App\Enums\Category;
 
 /**
  * @extends Factory<ItemType>

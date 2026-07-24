@@ -12,8 +12,6 @@ class StatementController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -22,9 +20,6 @@ class StatementController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param StatementShowRequest $request
-     * @return JsonResponse
      */
     public function show(StatementShowRequest $request): JsonResponse
     {

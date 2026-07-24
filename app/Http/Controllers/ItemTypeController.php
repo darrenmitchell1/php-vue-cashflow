@@ -17,8 +17,6 @@ class ItemTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -27,8 +25,6 @@ class ItemTypeController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return Response
      */
     public function create(): Response
     {
@@ -37,9 +33,6 @@ class ItemTypeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param ItemTypeStoreRequest $request
-     * @return RedirectResponse
      */
     public function store(ItemTypeStoreRequest $request): RedirectResponse
     {
@@ -58,9 +51,6 @@ class ItemTypeController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param ItemType $itemType
-     * @return Response
      */
     public function edit(ItemType $itemType): Response
     {
@@ -71,10 +61,6 @@ class ItemTypeController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param ItemTypeUpdateRequest $request
-     * @param ItemType $itemType
-     * @return RedirectResponse
      */
     public function update(ItemTypeUpdateRequest $request, ItemType $itemType): RedirectResponse
     {
@@ -85,9 +71,6 @@ class ItemTypeController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param ItemType $itemType
-     * @return RedirectResponse
      */
     public function destroy(ItemType $itemType): RedirectResponse
     {
@@ -100,9 +83,6 @@ class ItemTypeController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param ItemType $itemType
-     * @return RedirectResponse
      */
     public function restore(ItemType $itemType): RedirectResponse
     {

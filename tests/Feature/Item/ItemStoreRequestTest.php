@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 test('create item success', function () {
     $payload = [
-        'item_type_id' => (string)ItemType::factory()->create()->uuid,
+        'item_type_id' => (string) ItemType::factory()->create()->uuid,
         'flow' => Flow::IN->value,
         'frequency' => Frequency::SINGLE->value,
         'start_date' => Carbon::parse('2026-01-29')->format('Y-m-d'),
@@ -25,7 +25,7 @@ test('create item success', function () {
 
 test('Monthly > 28th Error', function () {
     $payload = [
-        'item_type_id' => (string)ItemType::factory()->create()->uuid,
+        'item_type_id' => (string) ItemType::factory()->create()->uuid,
         'flow' => Flow::IN->value,
         'frequency' => Frequency::MONTHLY->value,
         'start_date' => Carbon::parse('2026-01-29')->format('Y-m-d'),

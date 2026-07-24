@@ -8,7 +8,7 @@ test('update item type success', function () {
         'category' => Category::OPERATING->value,
         'code' => 'purchase_stock',
         'name' => 'Purchase Stock',
-        'description' => 'Purchase of Stock'
+        'description' => 'Purchase of Stock',
     ]);
 
     $params = [
@@ -29,14 +29,14 @@ test('update item type unique name error', function () {
         'category' => Category::INVESTING->value,
         'code' => 'purchase_property',
         'name' => 'Purchase Property',
-        'description' => 'Purchase of Property'
+        'description' => 'Purchase of Property',
     ]);
 
     $itemType = ItemType::factory()->create([
         'category' => Category::OPERATING->value,
         'code' => 'purchase_stock',
         'name' => 'Purchase Stock',
-        'description' => 'Purchase of Stock'
+        'description' => 'Purchase of Stock',
     ]);
 
     $params = [

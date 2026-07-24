@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\ItemType;
 use App\Enums\Category;
 use App\Models\Item;
+use App\Models\ItemType;
 use Illuminate\Support\Collection;
 
 test('Can Create Item Type', function () {

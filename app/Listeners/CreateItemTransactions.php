@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\ItemCreated;
 use App\Services\ItemService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Throwable;
 
 class CreateItemTransactions

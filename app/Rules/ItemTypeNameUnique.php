@@ -20,7 +20,7 @@ class ItemTypeNameUnique implements ValidationRule
 
     /**
      * Run the validation rule.
-     * 
+     *
      * Using custom validate rule so can sanitize input for query
      *
      * @param  Closure(string, ?string=): PotentiallyTranslatedString  $fail
@@ -30,7 +30,7 @@ class ItemTypeNameUnique implements ValidationRule
         $query = ItemType::query()
             ->withTrashed()
             ->whereRaw("LOWER(REPLACE(name, ' ', '')) = :val", ['val' => strtolower(str_replace(' ', '', $value))]);
-        
+
         // Apply Ignore
         if (Str::isUlid($this->ignoreId)) {
             $query->where('uuid', '!=', $this->ignoreId);

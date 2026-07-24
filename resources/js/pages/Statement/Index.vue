@@ -21,6 +21,12 @@ const form = useForm({
   period_to: null as string | null,
 });
 
+function setPeriodTo() : void {
+  if (form.period_from != null && form.period_to != null && form.period_from > form.period_to) {
+    form.period_to = form.period_from
+  }
+}
+
 const statement = ref<StatementResponse | null>(null);
 const errorMessage = ref<string | null>(null);
 const loading = ref(false);
@@ -93,6 +99,7 @@ async function getStatement() {
                 required
                 autofocus
                 autocomplete="period_from"
+                @blur="setPeriodTo()"
                 class="mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
               />
               <p v-if="props.errors.period_from" class="mt-2 text-sm text-red-600">
@@ -110,6 +117,7 @@ async function getStatement() {
                 type="date"
                 required
                 autocomplete="period_to"
+                @blur="setPeriodTo()"
                 class="mt-2 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
               />
               <p v-if="props.errors.period_to" class="mt-2 text-sm text-red-600">

@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\ItemTransaction;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**

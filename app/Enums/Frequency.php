@@ -23,7 +23,7 @@ enum Frequency: string
 
     public function interval(int $numberOfUnits = 1): CarbonInterval
     {
-        return match($this) {
+        return match ($this) {
             self::SINGLE => CarbonInterval::days($numberOfUnits),
             self::DAILY => CarbonInterval::days($numberOfUnits),
             self::WEEKLY => CarbonInterval::weeks($numberOfUnits),
@@ -35,7 +35,7 @@ enum Frequency: string
     {
         return [
             'id' => $this->value,
-            'label' => $this->label()
+            'label' => $this->label(),
         ];
     }
 
@@ -46,7 +46,7 @@ enum Frequency: string
                 self::SINGLE->toResource(),
                 self::DAILY->toResource(),
                 self::WEEKLY->toResource(),
-                self::MONTHLY->toResource()
+                self::MONTHLY->toResource(),
             ]
         );
     }

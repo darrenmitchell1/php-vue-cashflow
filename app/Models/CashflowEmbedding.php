@@ -27,7 +27,7 @@ class CashflowEmbedding extends Model
      */
     protected $hidden = [
         'id',
-        'item_transaction_id'
+        'item_transaction_id',
     ];
 
     /**

@@ -1,14 +1,14 @@
 <?php
 
-use App\Models\ItemType;
-use App\Models\Item;
 use App\Http\Resources\ItemResource;
+use App\Models\Item;
+use App\Models\ItemType;
 
 test('Item Type transformed to Resource', function () {
     $item = Item::factory()
-            ->for(ItemType::factory()->create())
-            ->create();
-    
+        ->for(ItemType::factory()->create())
+        ->create();
+
     $itemTypeResource = (new ItemResource($item))->resolve();
 
     expect($itemTypeResource)

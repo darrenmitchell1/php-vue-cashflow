@@ -11,21 +11,21 @@ use Carbon\CarbonImmutable;
 
 test('No Items Found', function () {
     // 7 day reporting period
-    $periodFrom = CarbonImmutable ::today();
+    $periodFrom = CarbonImmutable::today();
     $periodTo = CarbonImmutable::today()->addDays(7);
 
     $beforePeriodItem = Item::factory()
-            ->for(ItemType::factory()
-                ->create([
-                    'category' => Category::OPERATING
-                ]))
+        ->for(ItemType::factory()
             ->create([
-                'flow' => Flow::IN,
-                'frequency' => Frequency::DAILY,
-                'start_date' => $periodFrom->subDays(5),
-                'number_of_transactions' => 2,
-                'amount' => 1
-            ]);
+                'category' => Category::OPERATING,
+            ]))
+        ->create([
+            'flow' => Flow::IN,
+            'frequency' => Frequency::DAILY,
+            'start_date' => $periodFrom->subDays(5),
+            'number_of_transactions' => 2,
+            'amount' => 1,
+        ]);
     (new ItemService($beforePeriodItem))->createTransactions();
 
     $statementData = StatementService::buildStatementData($periodFrom, $periodTo);
@@ -49,49 +49,49 @@ test('No Items Found', function () {
 
 test('Full Statement for Period', function () {
     // 7 day reporting period
-    $periodFrom = CarbonImmutable ::today();
+    $periodFrom = CarbonImmutable::today();
     $periodTo = CarbonImmutable::today()->addDays(7);
 
     $beforePeriodItem = Item::factory()
-            ->for(ItemType::factory()
-                ->create([
-                    'category' => Category::OPERATING
-                ]))
+        ->for(ItemType::factory()
             ->create([
-                'flow' => Flow::IN,
-                'frequency' => Frequency::DAILY,
-                'start_date' => $periodFrom->subDays(5),
-                'number_of_transactions' => 2,
-                'amount' => 1
-            ]);
+                'category' => Category::OPERATING,
+            ]))
+        ->create([
+            'flow' => Flow::IN,
+            'frequency' => Frequency::DAILY,
+            'start_date' => $periodFrom->subDays(5),
+            'number_of_transactions' => 2,
+            'amount' => 1,
+        ]);
     (new ItemService($beforePeriodItem))->createTransactions();
 
     $startPeriodItem = Item::factory()
-            ->for(ItemType::factory()
-                ->create([
-                    'category' => Category::INVESTING
-                ]))
+        ->for(ItemType::factory()
             ->create([
-                'flow' => Flow::OUT,
-                'frequency' => Frequency::DAILY,
-                'start_date' => $periodFrom->subDays(1),
-                'number_of_transactions' => 2,
-                'amount' => -2
-            ]);
+                'category' => Category::INVESTING,
+            ]))
+        ->create([
+            'flow' => Flow::OUT,
+            'frequency' => Frequency::DAILY,
+            'start_date' => $periodFrom->subDays(1),
+            'number_of_transactions' => 2,
+            'amount' => -2,
+        ]);
     (new ItemService($startPeriodItem))->createTransactions();
 
     $staggerStartPeriodItem = Item::factory()
-            ->for(ItemType::factory()
-                ->create([
-                    'category' => Category::FINANCING
-                ]))
+        ->for(ItemType::factory()
             ->create([
-                'flow' => Flow::IN,
-                'frequency' => Frequency::DAILY,
-                'start_date' => $periodFrom->subDays(1),
-                'number_of_transactions' => 3,
-                'amount' => 3
-            ]);
+                'category' => Category::FINANCING,
+            ]))
+        ->create([
+            'flow' => Flow::IN,
+            'frequency' => Frequency::DAILY,
+            'start_date' => $periodFrom->subDays(1),
+            'number_of_transactions' => 3,
+            'amount' => 3,
+        ]);
     (new ItemService($staggerStartPeriodItem))->createTransactions();
 
     $statementData = StatementService::buildStatementData($periodFrom, $periodTo);
