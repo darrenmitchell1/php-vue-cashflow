@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CashflowAnalyserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemTypeController;
@@ -29,3 +30,8 @@ Route::delete('/items/{item:uuid}', [ItemController::class, 'destroy'])->name('i
 
 Route::get('/statement', [StatementController::class, 'index'])->name('statement.index');
 Route::get('/statement/show', [StatementController::class, 'show'])->name('statement.show');
+
+
+Route::get('/cashflow-analyser/show', [CashflowAnalyserController::class, 'show'])->name('cashflow-analyser.show');
+// @TODO Laravel 14 use Route::query
+Route::match(['QUERY'], '/cashflow-analyser/prompt', [CashflowAnalyserController::class, 'prompt'])->name('cashflow-analyser.prompt');

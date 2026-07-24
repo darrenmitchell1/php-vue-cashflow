@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import ItemTypeController from '@/actions/App/Http/Controllers/ItemTypeController';
+import cashflowAnalyser from '@/routes/cashflow-analyser';
 import items from '@/routes/items';
 import statement from '@/routes/statement';
 
@@ -22,6 +23,12 @@ const sections = [
     description: 'Generate a statement of cash flows for any reporting period.',
     href: statement.index(),
     cta: 'View statement',
+  },
+  {
+    title: 'Analyser',
+    description: 'Analyse Item Transactions using AI Agent.',
+    href: cashflowAnalyser.show(),
+    cta: 'Analyse Cashflow Item Transactions',
   },
 ];
 </script>

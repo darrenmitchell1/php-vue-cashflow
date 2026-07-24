@@ -91,7 +91,7 @@ class ItemTypeController extends Controller
      */
     public function destroy(ItemType $itemType): RedirectResponse
     {
-        if (!($itemType->trashed())) {
+        if (! ($itemType->trashed())) {
             $itemType->delete();
         }
 

@@ -19,9 +19,9 @@ enum Flow: string
     public function toResource(): array
     {
         return [
-                'id' => $this->value,
-                'label' => $this->label()
-            ];
+            'id' => $this->value,
+            'label' => $this->label()
+        ];
     }
 
     public static function toCollectionResource(): Collection
@@ -29,7 +29,7 @@ enum Flow: string
         return collect(
             [
                 self::IN->toResource(),
-                self::OUT->toResource(),
+                self::OUT->toResource()
             ]
         );
     }

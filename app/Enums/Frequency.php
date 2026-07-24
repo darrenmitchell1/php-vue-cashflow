@@ -27,16 +27,16 @@ enum Frequency: string
             self::SINGLE => CarbonInterval::days($numberOfUnits),
             self::DAILY => CarbonInterval::days($numberOfUnits),
             self::WEEKLY => CarbonInterval::weeks($numberOfUnits),
-            self::MONTHLY => CarbonInterval::months($numberOfUnits),
+            self::MONTHLY => CarbonInterval::months($numberOfUnits)
         };
     }
 
     public function toResource(): array
     {
         return [
-                'id' => $this->value,
-                'label' => $this->label()
-            ];
+            'id' => $this->value,
+            'label' => $this->label()
+        ];
     }
 
     public static function toCollectionResource(): Collection
@@ -46,7 +46,7 @@ enum Frequency: string
                 self::SINGLE->toResource(),
                 self::DAILY->toResource(),
                 self::WEEKLY->toResource(),
-                self::MONTHLY->toResource(),
+                self::MONTHLY->toResource()
             ]
         );
     }

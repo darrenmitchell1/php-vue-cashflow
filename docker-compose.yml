@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: cashflow_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  postgres_test:
+    image: pgvector/pgvector:pg16
+    container_name: testing_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: testing
+    ports:
+      - "5443:5432"
+    volumes:
+      - pgdatatest:/var/lib/postgresql/datatest
+
+volumes:
+  pgdata:
+  pgdatatest:

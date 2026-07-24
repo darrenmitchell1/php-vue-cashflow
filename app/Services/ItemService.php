@@ -78,7 +78,7 @@ class ItemService
         for ($x = 0; $x < $this->item->number_of_transactions; $x++) {
             $itemTransaction = ItemTransaction::whereDate('transaction_date', $startDate)->first();
 
-            if (!($itemTransaction instanceof ItemTransaction)) {
+            if (! ($itemTransaction instanceof ItemTransaction)) {
                 ItemTransactionService::create($this->item, $startDate);
             }
 

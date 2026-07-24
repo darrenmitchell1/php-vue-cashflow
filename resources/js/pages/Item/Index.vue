@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { home } from '@/routes/index';
 import { create, edit } from '@/routes/items';
-import { Item } from '@/types/item';
+import type { Item } from '@/types/item';
 
 interface Props {
   items: Item[];
@@ -23,6 +23,7 @@ function formatDate(iso: string): string {
 
 function formatMoney(value: number | string): string {
   const amount = Number(value);
+
   return new Intl.NumberFormat('en-AU', {
     style: 'currency',
     currency: 'AUD',

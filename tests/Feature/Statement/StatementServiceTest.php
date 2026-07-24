@@ -22,7 +22,7 @@ test('No Items Found', function () {
             ->create([
                 'flow' => Flow::IN,
                 'frequency' => Frequency::DAILY,
-                'start_date' => (clone $periodFrom)->subDays(5),
+                'start_date' => $periodFrom->subDays(5),
                 'number_of_transactions' => 2,
                 'amount' => 1
             ]);
@@ -60,7 +60,7 @@ test('Full Statement for Period', function () {
             ->create([
                 'flow' => Flow::IN,
                 'frequency' => Frequency::DAILY,
-                'start_date' => (clone $periodFrom)->subDays(5),
+                'start_date' => $periodFrom->subDays(5),
                 'number_of_transactions' => 2,
                 'amount' => 1
             ]);
@@ -74,7 +74,7 @@ test('Full Statement for Period', function () {
             ->create([
                 'flow' => Flow::OUT,
                 'frequency' => Frequency::DAILY,
-                'start_date' => (clone $periodFrom)->subDays(1),
+                'start_date' => $periodFrom->subDays(1),
                 'number_of_transactions' => 2,
                 'amount' => -2
             ]);
@@ -88,7 +88,7 @@ test('Full Statement for Period', function () {
             ->create([
                 'flow' => Flow::IN,
                 'frequency' => Frequency::DAILY,
-                'start_date' => (clone $periodFrom)->subDays(1),
+                'start_date' => $periodFrom->subDays(1),
                 'number_of_transactions' => 3,
                 'amount' => 3
             ]);

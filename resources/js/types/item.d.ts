@@ -1,6 +1,6 @@
-import type { ItemType } from '@/types/item-type';
 import type { Flow } from '@/types/flow';
 import type { Frequency } from '@/types/frequency';
+import type { ItemType } from '@/types/item-type';
 
 export interface Item {
   id: string;

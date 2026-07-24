@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { home } from '@/routes/index';
 import { create, edit } from '@/routes/item_types';
-import { ItemType } from '@/types/item-type';
+import type { ItemType } from '@/types/item-type';
 
 interface Props {
   itemTypes: ItemType[];
@@ -53,7 +53,7 @@ function categoryBadgeClass(categoryId: string): string {
           <p class="text-xs font-semibold tracking-[0.2em] text-emerald-100 uppercase">
             Cashflow
           </p>
-          <h1 class="mt-2 text-2xl font-semibold tracking-tight">Item types</h1>
+          <h1 class="mt-2 text-2xl font-semibold tracking-tight">Item Types</h1>
           <p class="mt-2 max-w-2xl text-sm text-emerald-100">
             Line types grouped by operating, investing, and financing activities on your statement.
           </p>

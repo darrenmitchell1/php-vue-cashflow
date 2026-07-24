@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { Statement, StatementError } from '@/types/statement';
+import { ref } from 'vue';
 import { home } from '@/routes/index';
 import { show } from '@/routes/statement';
+import type { Statement, StatementError } from '@/types/statement';
 import Show from './Show.vue';
 
 interface Props {
