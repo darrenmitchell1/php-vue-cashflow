@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { index, store } from '@/routes/item_types';
-import { Category } from '@/types/category';
-import { ItemTypeError } from '@/types/item-type';
 import { toAlphaDash } from '@/lib/text-formatters.js'
+import { index, store } from '@/routes/item_types';
+import type { Category } from '@/types/category';
+import type { ItemTypeError } from '@/types/item-type';
 
 interface Props {
   categories: Category[];

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { home } from '@/routes/index';
 import { create, edit } from '@/routes/item_types';
-import { ItemType } from '@/types/item-type';
+import type { ItemType } from '@/types/item-type';
 
 interface Props {
   itemTypes: ItemType[];

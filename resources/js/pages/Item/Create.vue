@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { index, store } from '@/routes/items';
-import { ItemError } from '@/types/item';
-import { Flow } from '@/types/flow';
-import { Frequency } from '@/types/frequency';
-import { ItemType } from '@/types/item-type';
+import { ref } from 'vue';
 import { toEndDate } from '@/lib/date-formatters';
+import { index, store } from '@/routes/items';
+import type { Flow } from '@/types/flow';
+import type { Frequency } from '@/types/frequency';
+import type { ItemError } from '@/types/item';
+import type { ItemType } from '@/types/item-type';
 
 interface Props {
   itemTypes: ItemType[];
@@ -40,6 +40,7 @@ const itemEndDte = ref('');
 function setEndDate() : void {
   if (form.start_date != null && form.frequency != null && form.number_of_transactions != null) {
     const startDate = new Date(form.start_date);
+
     if (form.number_of_transactions === 1) {
       itemEndDte.value = startDate.getDate() + ' / ' + String(startDate.getMonth() + 1).padStart(2, '0') + ' / ' + startDate.getFullYear();
     } else {

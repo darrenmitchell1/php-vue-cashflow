@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import ItemTypeController from '@/actions/App/Http/Controllers/ItemTypeController';
+import cashflowAnalyser from '@/routes/cashflow-analyser';
 import items from '@/routes/items';
 import statement from '@/routes/statement';
-import cashflowAnalyser from '@/routes/cashflow-analyser';
 
 const sections = [
   {

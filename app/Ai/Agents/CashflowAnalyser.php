@@ -59,7 +59,7 @@ class CashflowAnalyser implements Agent, Conversational, HasStructuredOutput, Ha
     public function schema(JsonSchema $schema): array
     {
         return [
-            'value' => $schema->string()->required(),
+            'value' => $schema->string()->required()
         ];
     }
 }

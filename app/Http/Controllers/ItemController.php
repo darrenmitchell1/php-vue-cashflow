@@ -116,7 +116,7 @@ class ItemController extends Controller
 
         $changes = [
             'old' => $item->getPrevious(),
-            'new' => $item->getChanges(),
+            'new' => $item->getChanges()
         ];
 
         ItemUpdated::dispatch($item, $changes);
@@ -132,7 +132,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item): RedirectResponse
     {
-        if (!($item->trashed())) {
+        if (! ($item->trashed())) {
             // prevent any further changes being made
             $item->delete();
 

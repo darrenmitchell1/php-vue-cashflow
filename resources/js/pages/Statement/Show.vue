@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Statement } from '@/types/statement';
+import type { Statement } from '@/types/statement';
 
 interface StatementResponse {
   statement: Statement;
@@ -30,6 +30,7 @@ const data = computed(() => props.statement.statement);
 
 const categories = computed(() => {
   const blocks = data.value.item_categories as Record<string, CategoryBlock>;
+
   return CATEGORY_ORDER.map((key) => blocks[key]).filter(Boolean);
 });
 
@@ -51,6 +52,7 @@ function formatDate(iso: string): string {
 
 function formatMoney(value: number): string {
   const amount = Number(value);
+
   return new Intl.NumberFormat('en-AU', {
     style: 'currency',
     currency: 'AUD',
@@ -67,6 +69,7 @@ function itemTypeRows(category: CategoryBlock) {
   if (!category.itemTypes) {
     return [];
   }
+
   return Object.values(category.itemTypes);
 }
 

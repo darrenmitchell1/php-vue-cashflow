@@ -21,9 +21,9 @@ enum Category: string
     public function toResource(): array
     {
         return [
-                'id' => $this->value,
-                'label' => $this->label()
-            ];
+            'id' => $this->value,
+            'label' => $this->label()
+        ];
     }
 
     public static function toCollectionResource(): Collection
@@ -32,7 +32,7 @@ enum Category: string
             [
                 self::INVESTING->toResource(),
                 self::FINANCING->toResource(),
-                self::OPERATING->toResource(),
+                self::OPERATING->toResource()
             ]
         );
     }

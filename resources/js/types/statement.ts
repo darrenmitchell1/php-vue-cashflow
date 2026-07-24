@@ -1,7 +1,7 @@
-import { Item } from "./item";
-import { ItemType } from "./item-type";
+import type { Item } from "./item";
+import type { ItemType } from "./item-type";
 
-export type ItemPeriodAmount {
+export interface ItemPeriodAmount {
   item_period_amount: number;
 }
 
