@@ -2,8 +2,9 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { home } from '@/routes/index';
-import { create, edit } from '@/routes/item_types';
+import { create} from '@/routes/item_types';
 import type { ItemType } from '@/types/item-type';
+import IndexRow from './IndexRow.vue';
 
 interface Props {
   itemTypes: ItemType[];
@@ -13,18 +14,6 @@ const props = defineProps<Props>();
 
 const hasTypes = computed(() => props.itemTypes.length > 0);
 
-function categoryBadgeClass(categoryId: string): string {
-  switch (categoryId) {
-    case 'operating':
-      return 'bg-emerald-100 text-emerald-800';
-    case 'investing':
-      return 'bg-sky-100 text-sky-800';
-    case 'financing':
-      return 'bg-violet-100 text-violet-800';
-    default:
-      return 'bg-gray-100 text-gray-800';
-  }
-}
 </script>
 
 <template>
@@ -103,40 +92,11 @@ function categoryBadgeClass(categoryId: string): string {
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-              <tr
+              <IndexRow
                 v-for="itemType in props.itemTypes"
                 :key="itemType.id"
-                class="hover:bg-gray-50/80"
-              >
-                <td class="px-4 py-3 font-mono text-sm font-medium text-gray-900">
-                  {{ itemType.code }}
-                </td>
-                <td class="px-4 py-3 font-medium text-gray-900">
-                  {{ itemType.name }}
-                </td>
-                <td
-                  class="max-w-md truncate px-4 py-3 text-gray-700"
-                  :title="itemType.description"
-                >
-                  {{ itemType.description }}
-                </td>
-                <td class="px-4 py-3">
-                  <span
-                    class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium"
-                    :class="categoryBadgeClass(itemType.category.id)"
-                  >
-                    {{ itemType.category.label }}
-                  </span>
-                </td>
-                <td class="px-4 py-3 text-right">
-                  <Link
-                    :href="edit({ itemType: itemType.id })"
-                    class="font-medium text-emerald-700 hover:text-emerald-900 hover:underline"
-                  >
-                    Edit
-                  </Link>
-                </td>
-              </tr>
+                :itemType="itemType"
+               />
             </tbody>
           </table>
         </div>
@@ -145,7 +105,7 @@ function categoryBadgeClass(categoryId: string): string {
           v-if="hasTypes"
           class="border-t border-gray-100 bg-gray-50 px-6 py-3 text-sm text-gray-600 sm:px-8"
         >
-          {{ props.itemTypes.length }} type{{ props.itemTypes.length === 1 ? '' : 's' }}
+          {{ props.itemTypes.length }} item type{{ props.itemTypes.length === 1 ? '' : 's' }}
         </footer>
       </section>
     </div>

@@ -2,7 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { home } from '@/routes/index';
-import { create, edit } from '@/routes/items';
+import { create, destroy, edit } from '@/routes/items';
 import type { Item } from '@/types/item';
 
 interface Props {
@@ -185,6 +185,12 @@ function isInflow(item: Item): boolean {
                     class="font-medium text-emerald-700 hover:text-emerald-900 hover:underline"
                   >
                     Edit
+                  </Link>
+                  <Link
+                    :href="destroy({ item: item.id })"
+                    class="font-medium text-emerald-700 hover:text-emerald-900 hover:underline"
+                  >
+                    Delete
                   </Link>
                 </td>
               </tr>

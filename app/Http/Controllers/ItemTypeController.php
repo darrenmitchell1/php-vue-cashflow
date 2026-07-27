@@ -7,6 +7,7 @@ use App\Http\Requests\ItemTypeStoreRequest;
 use App\Http\Requests\ItemTypeUpdateRequest;
 use App\Http\Resources\ItemTypeCollection;
 use App\Models\ItemType;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -72,24 +73,32 @@ class ItemTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ItemType $itemType): RedirectResponse
+    public function destroy(ItemType $itemType): JsonResponse
     {
         if (! ($itemType->trashed())) {
             $itemType->delete();
         }
 
-        return Redirect::route('item_types.index');
+        return response()->json([
+            'success' => true,
+            'message' => 'Item Type Deleted successfully.',
+            'data' => $itemType->toResource()
+        ]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Restore the specified resource from storage.
      */
-    public function restore(ItemType $itemType): RedirectResponse
+    public function restore(ItemType $itemType): JsonResponse
     {
         if ($itemType->trashed()) {
             $itemType->restore();
         }
 
-        return Redirect::route('item_types.index');
+        return response()->json([
+            'success' => true,
+            'message' => 'Item Type Restored successfully.',
+            'data' => $itemType->toResource()
+        ]);
     }
 }
