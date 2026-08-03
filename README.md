@@ -28,9 +28,11 @@ Migration: $table->vector('embedding', 768);
 
 ## Installation
 
-Install [Ollama](https://docs.ollama.com/quickstart#1-download-ollama)
+Install [Ollama](https://docs.ollama.com/quickstart#1-download-ollama)\
+The model is defined in .env with AI_MODEL
 ```
 $ ollama pull nomic-embed-text
+$ ollama pull llama3.1:8b
 ```
 
 copy the .env.example to make .env and configure
